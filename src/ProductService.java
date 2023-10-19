@@ -17,7 +17,10 @@ class ProductService implements PdInterface {
         List<Product> result = new ArrayList<>();
 
         for (Product product : productList) {
-            if (product.getType().equals(productType) && product.getP_count()>product.getP_stock()) {
+            if (product.getType().equals(productType)               // 해당하는 productType
+                    && product.getP_count()>product.getP_stock()    // 개수가 재고보다 많을 때
+                    && product.getSaleflag()                       // 판매셋팅 true
+            ) {
                 result.add(product);
             }
         }

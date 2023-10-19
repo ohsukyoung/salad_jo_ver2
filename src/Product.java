@@ -66,9 +66,10 @@ public class Product implements Serializable, Impl_admin {
     private int p_price;
     private ProductType type;
     private int p_limitCount;
+    private boolean Saleflag;
 
 
-    public Product(int p_checkNumber, ProductType type,int p_material, String p_name, String p_unit, int p_count, int p_calorie, int p_stock, int p_price) {
+    public Product(int p_checkNumber, ProductType type,int p_material, String p_name, String p_unit, int p_count, int p_calorie, int p_stock, int p_price, boolean Saleflag) {
         this.p_checkNumber = p_checkNumber;
         this.type = type;
         this.p_material = p_material;
@@ -78,6 +79,7 @@ public class Product implements Serializable, Impl_admin {
         this.p_calorie = p_calorie;
         this.p_stock = p_stock;
         this.p_price = p_price;
+        this.Saleflag = Saleflag;
     }
 
     // 생성자
@@ -115,6 +117,8 @@ public class Product implements Serializable, Impl_admin {
     public void setP_price(int p_price) { this.p_price = p_price; }
     public int getP_limitCount() { return p_limitCount; }
     public void setP_limitCount(int p_limitCount) { this.p_limitCount = p_limitCount; }
+    public boolean getSaleflag() { return Saleflag; }
+    public void setSaleflag(boolean Saleflag) { this.Saleflag = Saleflag; }
 
     @Override
     public String toString() {
@@ -301,7 +305,7 @@ public class Product implements Serializable, Impl_admin {
                 System.out.print("\t▶ 저장하시겠습니까?(Y/N) : ");
                 char x = br.readLine().charAt(0);
                 if (x == 'Y' || x == 'y') {
-                    Product product = new Product(p_checkNumber, productType, p_material, p_name, p_unit, p_count, p_calorie, p_stock, p_price);
+                    Product product = new Product(p_checkNumber, productType, p_material, p_name, p_unit, p_count, p_calorie, p_stock, p_price, Saleflag);
                     list1.add(product);
                     // 직렬화 주석 231018
 //                    FileMg f = new FileMg();

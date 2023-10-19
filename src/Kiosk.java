@@ -108,21 +108,11 @@ class Kiosk {
         ProductType productType = productTypeChange.ProductTypeChange(userSelect);
 
         switch (productType) { // DESC: swtich문의 조건에 String 타입을 넣게되면, case문에서 enum타입으로 비교할 수 가 없음
-            case RCMND:
-                menuRcmd();
-                break;
-            case MY_SALAD:
-                menuMySalad();
-                break;
-            case DRINK:
-                menuDrink();
-                break;
-            case SIDE:
-                menuSide();
-                break;
-            case CANCEL:
-                menuCancel();
-                break;
+            case RCMND      : menuRcmd();    break;
+            case MY_SALAD   : menuMySalad(); break;
+            case DRINK      : menuDrink();   break;
+            case SIDE       : menuSide();    break;
+            case CANCEL     : menuCancel();  break;
         }
     }
 

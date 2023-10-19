@@ -13,11 +13,11 @@ public class FoodAdmin implements Serializable {
 
     KioskMg km = new KioskMg();
 
-    List<Product> list1 = CacheData.allProductList;
-    List<MasterRc> list2 = CacheData.masterProductList;
+    List<Product> allProductList = CacheData.allProductList;
+    List<MasterRc> masterProductList = CacheData.masterProductList;
 
-    List<Product> list3 = CacheData.list3;
-    List<MasterRc> list4 = CacheData.list4;
+//    List<Product> list3 = CacheData.list3;
+//    List<MasterRc> list4 = CacheData.list4;
 
 
 
@@ -50,38 +50,48 @@ public class FoodAdmin implements Serializable {
                         System.out.println("\t===========================================================================================");
 
                         // Iterator 활용하여 출력
-                        Iterator<Product> itList;
-                        itList = list3.iterator();
-                        while (itList.hasNext()) {
+//                        Iterator<Product> itList;
+//                        itList = allProductList.iterator();
+                        for(Product product:allProductList){
+                            if(product.getSaleflag()){     // 판매정보가 true 일때
+                                System.out.printf("\t|| %5s || %5s || %5s || %9s || %5s || %5s || %5s || %5s ||\n", product.getP_checkNumber(),
+                                        product.getP_material(), product.getP_name(), product.getP_unit(), product.getP_count(), product.getP_calorie(),
+                                        product.getP_stock(), product.getP_price());
+                            }
+                        }
+                        /*while (itList.hasNext()) {
                             Product itS = itList.next();
-                            System.out.printf("\t|| %5s || %5s || %5s || %9s || %5s || %5s || %5s || %5s ||\n", itS.getP_checkNumber(),
+                            if(itS.getSaleflag()){
+                                System.out.printf("\t|| %5s || %5s || %5s || %9s || %5s || %5s || %5s || %5s ||\n", itS.getP_checkNumber(),
                                     itS.getP_material(), itS.getP_name(), itS.getP_unit(), itS.getP_count(), itS.getP_calorie(),
                                     itS.getP_stock(), itS.getP_price());
-                        }
+                            }
+                        }*/
                         System.out.println("\t===========================================================================================");
                         System.out.println();
                         return;
 
                     case 2:
-                        System.out.println("\n\t[ 2.사장 추천 조합 출력 ]");
+                        System.out.println("\n\t[ 2. 사장 추천 조합 출력 ]");
                         System.out.println("\t===========================================================================================");
                         System.out.printf("\t|| %5s || %5s || %5s || %5s || %5s || %5s \n",
                                 "구분번호", "이름", "칼로리", "금액", "재료", "개수");
                         System.out.println("\t===========================================================================================");
 
                         // existingList2에 있는 MasterRc 객체를 출력
-                        for (MasterRc masterRc : list4) {
-                            System.out.printf("\t|| %5d || %5s || %5d || %5d || %5d \n",
+                        for (MasterRc masterRc : masterProductList) {
+                            if(masterRc.getSaleflag()){     // 판매정보가 true 일때
+                                System.out.printf("\t|| %5d || %5s || %5d || %5d || %5d \n",
                                     masterRc.getR_checkNumber(), masterRc.getR_name(), masterRc.getR_totalcalorie(),
                                     masterRc.getR_price(), masterRc.getR_count());
 
-                            // 재료정보 출력
-                            for (Product product : masterRc.getR_products()) {
-                                System.out.println("\t재료이름: " + product.getP_name() + " || 재료 갯수: " + product.getP_count());
+                                // 재료정보 출력
+                                for (Product product : masterRc.getR_products()) {
+                                    System.out.println("\t재료이름: " + product.getP_name() + " || 재료 갯수: " + product.getP_count());
+                                }
                             }
-
-                            System.out.println();
-                            break;
+//                            System.out.println();
+//                            break;
                         }
                         System.out.println("\t===========================================================================================");
                         System.out.println();
@@ -115,8 +125,8 @@ public class FoodAdmin implements Serializable {
                         boolean found = false;
                         boolean k = false;
 
-                        for (int i = 0; i < list3.size(); i++) {
-                            if (pointNumber == list3.get(i).getP_checkNumber()) {
+                        for (int i = 0; i < allProductList.size(); i++) {
+                            if (pointNumber == allProductList.get(i).getP_checkNumber() && allProductList.get(i).getSaleflag()) {
                                 k = true;
                                 break;
                             }
@@ -126,10 +136,10 @@ public class FoodAdmin implements Serializable {
                             return;
                         }
 
-                        for (int i = 0; i < list1.size(); i++) {
-                            if (pointNumber == list1.get(i).getP_checkNumber()) {
+                        for (int i = 0; i < allProductList.size(); i++) {
+                            if (pointNumber == allProductList.get(i).getP_checkNumber()) {
                                 found = true;
-                                Product selectedProduct = list1.get(i);
+                                Product selectedProduct = allProductList.get(i);
 
                                 System.out.println("\t===========================================================================================");
                                 System.out.printf("\t|| %5s || %5s || %5s || %9s || %5s || %5s || %5s || %5s ||\n",
@@ -147,7 +157,8 @@ public class FoodAdmin implements Serializable {
                                 char x = br.readLine().charAt(0);
                                 if (x == 'Y' || x == 'y') {
                                     // 선택된 항목을 다른 배열에 저장
-                                    list3.add(selectedProduct);
+                                    //allProductList.add(selectedProduct);
+                                    selectedProduct.setSaleflag(true);
                                     System.out.println("\t「 저장되었습니다. 」");
 
                                     return;
@@ -167,8 +178,8 @@ public class FoodAdmin implements Serializable {
                         int pointNumber2 = Integer.parseInt(br.readLine());
                         boolean found2 = false;
                         boolean p = false;
-                        for (int i = 0; i < list4.size(); i++) {
-                            if (pointNumber2 == list4.get(i).getR_checkNumber()) {
+                        for (int i = 0; i < masterProductList.size(); i++) {
+                            if (pointNumber2 == masterProductList.get(i).getR_checkNumber() && masterProductList.get(i).getSaleflag()) {
                                 p = true;
                                 break;
                             }
@@ -178,10 +189,10 @@ public class FoodAdmin implements Serializable {
                             return;
                         }
 
-                        for (int i = 0; i < list2.size(); i++) {
-                            if (pointNumber2 == list2.get(i).getR_checkNumber()) {
+                        for (int i = 0; i < masterProductList.size(); i++) {
+                            if (pointNumber2 == masterProductList.get(i).getR_checkNumber()) {
                                 found2 = true;
-                                MasterRc selectedMasterRc = list2.get(i);
+                                MasterRc selectedMasterRc = masterProductList.get(i);
 
                                 System.out.println("\t===========================================================================================");
                                 System.out.printf("\t|| %5s || %5s || %5s || %5s || %5s ||\n",
@@ -195,7 +206,8 @@ public class FoodAdmin implements Serializable {
                                 System.out.print("\t▶ 판매항목에 추가하시겠습니까?(Y/N) : ");
                                 char x = br.readLine().charAt(0);
                                 if (x == 'Y' || x == 'y') {
-                                    list4.add(selectedMasterRc);
+                                    //masterProductList.add(selectedMasterRc);
+                                    selectedMasterRc.setSaleflag(true);
                                     System.out.println("\t「 저장되었습니다. 」");
                                     return;
                                 } else
@@ -236,10 +248,10 @@ public class FoodAdmin implements Serializable {
                         int pointNumber = Integer.parseInt(br.readLine());
                         boolean found3 = false;
 
-                        for (int i = 0; i < list3.size(); i++) {
-                            if (pointNumber == list3.get(i).getP_checkNumber()) {
+                        for (int i = 0; i < allProductList.size(); i++) {
+                            if (pointNumber == allProductList.get(i).getP_checkNumber() && allProductList.get(i).getSaleflag()) {
                                 found3 = true;
-                                Product selectedProduct = list3.get(i);
+                                Product selectedProduct = allProductList.get(i);
 
                                 System.out.println("\t===========================================================================================");
                                 System.out.printf("\t|| %5s || %5s || %5s || %9s || %5s || %5s || %5s || %5s ||\n",
@@ -250,14 +262,15 @@ public class FoodAdmin implements Serializable {
                                         selectedProduct.getP_checkNumber(), selectedProduct.getP_material(), selectedProduct.getP_name(),
                                         selectedProduct.getP_unit(), selectedProduct.getP_count(), selectedProduct.getP_calorie(),
                                         selectedProduct.getP_stock(), selectedProduct.getP_price());
-                                System.out.println();
+//                                System.out.println();
                                 System.out.println("\t===========================================================================================");
 
-                                System.out.print("\t▶ 판매항목에 제거하시겠습니까?(Y/N) :");
+                                System.out.print("\t▶ 판매항목에 제거하시겠습니까?(Y/N) : ");
                                 char x = br.readLine().charAt(0);
                                 if (x == 'Y' || x == 'y') {
                                     // 선택된 항목을 다른 배열에 저장
-                                    list3.remove(selectedProduct);
+                                    //allProductList.remove(selectedProduct);
+                                    selectedProduct.setSaleflag(false);
                                     System.out.println("\t「 저장되었습니다. 」");
 
                                     return;
@@ -277,15 +290,15 @@ public class FoodAdmin implements Serializable {
                         int pointNumber2 = Integer.parseInt(br.readLine());
                         boolean found4 = false;
 
-                        for (int i = 0; i < list4.size(); i++) {
-                            if (pointNumber2 == list4.get(i).getR_checkNumber()) {
+                        for (int i = 0; i < masterProductList.size(); i++) {
+                            if (pointNumber2 == masterProductList.get(i).getR_checkNumber() && masterProductList.get(i).getSaleflag()) {
                                 found4 = true;
-                                MasterRc selectedMasterRc = list4.get(i);
+                                MasterRc selectedMasterRc = masterProductList.get(i);
 
                                 System.out.println("\t===========================================================================================");
                                 System.out.printf("\t|| %5s || %5s || %5s || %5s || %5s ||\n",
                                         "구분번호", "이름", "칼로리", "금액", "재료");
-                                System.out.printf("\t|| %5d || %5s || %5d || %5d ||",
+                                System.out.printf("\t|| %5d || %5s || %5d || %5d ||\n",
                                         selectedMasterRc.getR_checkNumber(), selectedMasterRc.getR_name(),
                                         selectedMasterRc.getR_totalcalorie(), selectedMasterRc.getR_price());
                                 System.out.println("\t===========================================================================================");
@@ -293,7 +306,8 @@ public class FoodAdmin implements Serializable {
                                 System.out.print("\t▶ 판매항목에 제거하시겠습니까?(Y/N) : ");
                                 char x = br.readLine().charAt(0);
                                 if (x == 'Y' || x == 'y') {
-                                    list4.remove(selectedMasterRc);
+                                    //masterProductList.remove(selectedMasterRc);
+                                    selectedMasterRc.setSaleflag(false);
                                     System.out.println("\t「 저장되었습니다. 」");
                                     return;
                                 } else

@@ -47,10 +47,10 @@ class OrderValues implements Serializable{
 
     @Override
     public String toString() {
-        return "선택내용" + "{" + "상품명:" + u_name +
-                ", 선택개수: " + u_Count +
-                ", 칼로리: " + u_calorie * u_Count +
-                ", 가격: " + u_price * u_Count + "}";
+        return "선택내용" + "{" + "상품명 : " + u_name +
+                ", 선택개수 : " + u_Count +
+                ", 칼로리 : " + u_calorie * u_Count +
+                ", 가격 : " + u_price * u_Count + "}";
     }
 }
 

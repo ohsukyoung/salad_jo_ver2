@@ -23,10 +23,12 @@ class MasterRc implements Serializable ,Impl_admin
     private ProductType type;
     private int r_count;
     private int r_limitCount;
-
+    private boolean Saleflag;
     public ProductType getType() { return type; }
 
-    public MasterRc(int r_checkNumber, ProductType type, String r_name, int r_totalcalorie, int r_price, List<Product> r_products,double r_discount, int r_count)
+    int materialDetailCount = 3;
+
+    public MasterRc(int r_checkNumber, ProductType type, String r_name, int r_totalcalorie, int r_price, List<Product> r_products,double r_discount, int r_count, boolean Saleflag)
     {
         this.r_checkNumber = r_checkNumber;
         this.type = type;
@@ -36,6 +38,7 @@ class MasterRc implements Serializable ,Impl_admin
         this.r_products = r_products;
         this.r_discount = r_discount;
         this.r_count = r_count;
+        this.Saleflag = Saleflag;
     }
 
     public MasterRc(int r_checkNumber, String r_name, int r_totalcalorie, int r_price, List<Product> r_products)
@@ -46,7 +49,7 @@ class MasterRc implements Serializable ,Impl_admin
         this.r_products = r_products;
     }
 
-    public MasterRc(){this(0, ProductType.RCMND, "", 0, 0, new ArrayList<>(),0,0);}
+    public MasterRc(){this(0, ProductType.RCMND, "", 0, 0, new ArrayList<>(),0,0,false);}
     public int getR_checkNumber(){return r_checkNumber;}
     public void setR_checkNumber(int r_checkNumber){this.r_checkNumber = r_checkNumber;}
     public String getR_name(){return r_name;}
@@ -66,6 +69,8 @@ class MasterRc implements Serializable ,Impl_admin
     }
     public int getR_limitCount() { return r_limitCount; }
     public void setR_limitCount(int r_limitCount) { this.r_limitCount = r_limitCount; }
+    public boolean getSaleflag() { return Saleflag; }
+    public void setSaleflag(boolean Saleflag) { this.Saleflag = Saleflag; }
 
     // MasterRc 객체 내의 재료의 총 칼로리 계산
     private int calculateTotalCalorie(List<Product> products)
@@ -111,32 +116,33 @@ class MasterRc implements Serializable ,Impl_admin
         System.out.println("\n\t[ 1. 사장 추천 조합 출력 ]");
         System.out.println("\t===========================================================================================");
         System.out.printf("\t|| %5s || %8s || %5s || %5s || %5s || %5s \n",
-                "구분번호", "이름", "칼로리", "금액", "개수", "재료");
+                "구분번호", "이름", "칼로리", "금액", "개수", "재료(" + materialDetailCount +")");
         System.out.println("\t===========================================================================================");
 
         // existingList2에 있는 MasterRc 객체를 출력
         for (MasterRc masterRc : masterProduct)
         {
-            
-            System.out.printf("\t|| %5d || %8s || %5d || %5d || %5d ",
-                    masterRc.getR_checkNumber(), masterRc.getR_name(),
-                    r_totalcalorie, masterRc.getR_price(), masterRc.getR_count());
-            String materialDetail="";
-            for (int i = 0; i<masterRc.getR_products().size(); i++)
-            {
-                if(i!=0) materialDetail +=", ";
-                String materialItem = masterRc.getR_products().get(i).getP_name();
-                materialDetail += materialItem;
-            }
-            System.out.printf("|| %12s\n",materialDetail);
+            if(masterRc.getSaleflag()){     // 판매정보가 true 일때
+                System.out.printf("\t|| %5d || %8s || %5d || %5d || %5d ",
+                        masterRc.getR_checkNumber(), masterRc.getR_name(),
+                        r_totalcalorie, masterRc.getR_price(), masterRc.getR_count());
+                String materialDetail="";
+                for (int i = 0; i<masterRc.getR_products().size(); i++)
+                {
+                    if(i!=0) materialDetail +=", ";
+                    String materialItem = masterRc.getR_products().get(i).getP_name();
+                    materialDetail += materialItem;
+                }
+                System.out.printf("|| %12s\n",materialDetail);
 
 
-            // 재료정보 출력
-            for (Product product : masterRc.getR_products())
-            {
-                System.out.printf("\t- 상세재료: %8s\t|| 재료개수: %5d\n",product.getP_name(),product.getP_count());
+                // 재료정보 출력
+                for (Product product : masterRc.getR_products())
+                {
+                    System.out.printf("\t- 상세재료: %8s\t|| 재료개수: %5d\n",product.getP_name(),product.getP_count());
+                }
+                System.out.println();
             }
-            System.out.println();
         }
         System.out.println("\t===========================================================================================");
 
@@ -151,34 +157,36 @@ class MasterRc implements Serializable ,Impl_admin
 
         try {
             System.out.println();
-            System.out.println("\n\t[ 2.신규 사장 추천 조합 등록 ]");
+            System.out.println("\n\t[ 2. 신규 사장 추천 조합 등록 ]");
             System.out.println("\t===========================================================================================");
             System.out.printf("\t|| %5s || %5s || %5s || %5s || %5s ||\n",
-                    "구분번호", "이름", "칼로리", "금액", "재료");
+                    "구분번호", "이름", "칼로리", "금액", "재료(" + materialDetailCount +")");
             System.out.println("\t===========================================================================================");
 
             List<Product> selectedProducts = new ArrayList<>();
             List<Product> product = CacheData.allProductList;
 
-            int materialDetailCount = 3;
-            while (true) {
-                System.out.printf("\t*** [안내] 조합에 들어갈 재료의 갯수: %d\n", materialDetailCount);
-                System.out.print("\t▶ 조합에 들어갈 재료의 구분번호 입력: ");
+
+            int idx = 1;
+            System.out.printf("\n\t*** [안내] 조합에 들어갈 재료의 갯수: %d ***\n", materialDetailCount);
+            while (idx <= materialDetailCount) {
+                System.out.print("\t▶ 조합에 들어갈 재료(" + idx + ")의 구분번호 입력: ");
                 int pointNumber = Integer.parseInt(br.readLine());
-                if (pointNumber == 0) {
-                    break;
-                }
+//                if (pointNumber == 0) {
+//                    break;
+//                }
 
                 boolean found = false;
 
                 for (Product p : product) {
-                    if (pointNumber == p.getP_checkNumber()) {
+                    if (pointNumber == p.getP_checkNumber() && p.getSaleflag()) {
+                        idx++;
                         found = true;
                         selectedProducts.add(p);
 
-                        System.out.println("\t▷ 선택한 재료:");
+                        System.out.println("\t▷ 선택한 재료 : ");
                         for (Product selected : selectedProducts) {
-                            System.out.println("\t\t-이름: " + selected.getP_name() + ", 갯수: " + selected.getP_count());
+                            System.out.println("\t\t-이름 : " + selected.getP_name() + ", 갯수 : " + selected.getP_count());
                         }
                     }
                 }
@@ -191,19 +199,18 @@ class MasterRc implements Serializable ,Impl_admin
             // 칼로리 총합 계산
             r_totalcalorie = calculateTotalCalorie(selectedProducts);
             // 금액 총합 계산
-            r_price = calculateTotalPrice(selectedProducts);
+            int originTotalPrice = calculateTotalPrice(selectedProducts);
             // 재고 개수 계산
             r_count = calculateMinCount(selectedProducts);
 
-            System.out.println("\t▷ 사장추천 조합재료 합계 :" + r_price);
-            System.out.println("\t*** [안내] '사장추천'은 위의 '조합재료합계' 보다 적은 금액을 입력해주세요.");
-
+            System.out.println("\n\t*** [안내] '사장추천'은 위의 '조합재료합계' 보다 적은 금액을 입력해주세요. ***");
+            System.out.println("\t▷ 사장추천 조합재료 합계 : " + originTotalPrice);
             System.out.print("\t▶ 조합 정보에 들어갈 [구분번호,이름,금액] 입력(스페이스로 구분) : ");
             String input = br.readLine();
             StringTokenizer tokenizer = new StringTokenizer(input, " ");
 
             if (tokenizer.countTokens() != 3) {
-                System.out.println("\t입력한 항목의 갯수가 맞지 않습니다.");
+                System.out.println("\t[!] 입력한 항목의 갯수가 맞지 않습니다.");
                 return;
             }
 
@@ -212,7 +219,7 @@ class MasterRc implements Serializable ,Impl_admin
             int r_price = Integer.parseInt(tokenizer.nextToken());
 
             // 할인율 계산
-            double r_discount = 100 - ((r_price / r_price) * 100);
+            double calculateDiscount = 100 - (((double)r_price / originTotalPrice) * 100);
 
             // 이미 존재하는 구분번호인지 확인
             boolean isDuplicate = false;
@@ -227,11 +234,11 @@ class MasterRc implements Serializable ,Impl_admin
                 System.out.println("\t[!] 이미 구분번호가 존재합니다.");
                 return;
             } else {
-                System.out.print("\t저장하시겠습니까?(Y/N) : ");
+                System.out.print("\t▶ 저장하시겠습니까?(Y/N) : ");
                 char x = br.readLine().charAt(0);
                 if (x == 'Y' || x == 'y') {
                     // MasterRc 객체 생성 및 리스트에 추가
-                    MasterRc masterRc = new MasterRc(r_checkNumber, ProductType.RCMND, r_name, r_totalcalorie, r_price, selectedProducts, r_discount, r_count);
+                    MasterRc masterRc = new MasterRc(r_checkNumber, ProductType.RCMND, r_name, r_totalcalorie, r_price, selectedProducts, calculateDiscount, r_count, Saleflag);
                     list2.add(masterRc);
                     System.out.println("\t「 저장되었습니다. 」");
                 } else {
