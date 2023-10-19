@@ -5,7 +5,7 @@ class Menus
 {
     public static final int E_CP = 1; // 결제 취소
     public static final int E_REC = 2; // 영수증 출력
-    public static final int E_SC = 3; // 매출조회
+    public static final int E_SC = 3; // 매출조회!
     public static final int E_EX = 4; // 종료
 }
 
