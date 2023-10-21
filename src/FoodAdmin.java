@@ -44,19 +44,19 @@ public class FoodAdmin implements Serializable {
                 {
                     case 1:
                         System.out.println("\n\t[ 1. 판매 재료정보 출력 ]");
-                        System.out.println("\t===========================================================================================");
-                        System.out.printf("\t|| %5s || %5s || %5s || %9s || %5s || %5s || %5s || %5s ||\n",
-                                "구분번호", "분류번호", "이름", "단위", "개수", "칼로리", "적정재고", "금액");
-                        System.out.println("\t===========================================================================================");
+                        System.out.println("\t=============================================================================================================");
+                        System.out.printf("\t|| %5s || %5s || %5s || %9s || %5s || %5s || %5s || %5s || %5s ||\n",
+                                "구분번호", "분류번호", "이름", "단위", "개수", "칼로리", "적정재고", "금액", "판매여부");
+                        System.out.println("\t=============================================================================================================");
 
                         // Iterator 활용하여 출력
 //                        Iterator<Product> itList;
 //                        itList = allProductList.iterator();
                         for(Product product:allProductList){
                             if(product.getSaleflag()){     // 판매정보가 true 일때
-                                System.out.printf("\t|| %5s || %5s || %5s || %9s || %5s || %5s || %5s || %5s ||\n", product.getP_checkNumber(),
+                                System.out.printf("\t|| %5s || %5s || %5s || %9s || %5s || %5s || %5s || %5s || %5s ||\n", product.getP_checkNumber(),
                                         product.getP_material(), product.getP_name(), product.getP_unit(), product.getP_count(), product.getP_calorie(),
-                                        product.getP_stock(), product.getP_price());
+                                        product.getP_stock(), product.getP_price(), "판매 O");
                             }
                         }
                         /*while (itList.hasNext()) {
@@ -67,16 +67,16 @@ public class FoodAdmin implements Serializable {
                                     itS.getP_stock(), itS.getP_price());
                             }
                         }*/
-                        System.out.println("\t===========================================================================================");
+                        System.out.println("\t=============================================================================================================");
                         System.out.println();
                         return;
 
                     case 2:
                         System.out.println("\n\t[ 2. 사장 추천 조합 출력 ]");
-                        System.out.println("\t===========================================================================================");
+                        System.out.println("\t=============================================================================================================");
                         System.out.printf("\t|| %5s || %5s || %5s || %5s || %5s || %5s \n",
                                 "구분번호", "이름", "칼로리", "금액", "재료", "개수");
-                        System.out.println("\t===========================================================================================");
+                        System.out.println("\t=============================================================================================================");
 
                         // existingList2에 있는 MasterRc 객체를 출력
                         for (MasterRc masterRc : masterProductList) {
@@ -93,7 +93,7 @@ public class FoodAdmin implements Serializable {
 //                            System.out.println();
 //                            break;
                         }
-                        System.out.println("\t===========================================================================================");
+                        System.out.println("\t=============================================================================================================");
                         System.out.println();
 
                         return;
@@ -119,7 +119,28 @@ public class FoodAdmin implements Serializable {
 
                 switch (c) {
                     case 1:
-                        System.out.println("\n\t[ 1.판매재료 세팅 ]");
+                        System.out.println("\n\t[ 1. 판매재료 세팅 ]");
+
+                        // 판매X 출력
+                        System.out.println("\n\t[ 판매X 목록 출력 ]");
+                        System.out.println("\t==========================================================================================================");
+                        System.out.printf("\t|| %5s || %5s || %5s || %9s || %5s || %5s || %5s || %5s ||%5s ||\n",
+                                "구분번호", "분류번호", "이름", "단위", "개수", "칼로리", "적정재고", "금액", "판매여부");
+                        System.out.println("\t==========================================================================================================");
+
+                        Iterator<Product> itList = allProductList.iterator();
+                        while (itList.hasNext())
+                        {
+                            Product itS = itList.next();
+                            if(!itS.getSaleflag()){
+                                System.out.printf("\t|| %5s || %5s || %5s || %9s || %5s || %5s || %5s || %5s || %5s ||\n", itS.getP_checkNumber(),
+                                        itS.getP_material(), itS.getP_name(), itS.getP_unit(), itS.getP_count(), itS.getP_calorie(),
+                                        itS.getP_stock(), itS.getP_price(), "판매 X");
+                            }
+                        }
+                        System.out.println("\t==========================================================================================================");
+                        System.out.println();
+
                         System.out.print("\t▶ 작업할 대상의 구분번호 입력: ");
                         int pointNumber = Integer.parseInt(br.readLine());
                         boolean found = false;
@@ -141,16 +162,16 @@ public class FoodAdmin implements Serializable {
                                 found = true;
                                 Product selectedProduct = allProductList.get(i);
 
-                                System.out.println("\t===========================================================================================");
-                                System.out.printf("\t|| %5s || %5s || %5s || %9s || %5s || %5s || %5s || %5s ||\n",
-                                        "구분번호", "분류번호", "이름", "단위", "개수", "칼로리", "적정재고", "금액");
-                                System.out.println("\t===========================================================================================");
+                                System.out.println("\t=============================================================================================================");
+                                System.out.printf("\t|| %5s || %5s || %5s || %9s || %5s || %5s || %5s || %5s || %5s ||\n",
+                                        "구분번호", "분류번호", "이름", "단위", "개수", "칼로리", "적정재고", "금액", "판매여부");
+                                System.out.println("\t=============================================================================================================");
 
-                                System.out.printf("\t|| %5s || %5s || %5s || %9s || %5s || %5s || %5s || %5s ||\n",
+                                System.out.printf("\t|| %5s || %5s || %5s || %9s || %5s || %5s || %5s || %5s || %5s ||\n",
                                         selectedProduct.getP_checkNumber(), selectedProduct.getP_material(), selectedProduct.getP_name(),
                                         selectedProduct.getP_unit(), selectedProduct.getP_count(), selectedProduct.getP_calorie(),
-                                        selectedProduct.getP_stock(), selectedProduct.getP_price());
-                                System.out.println("\t===========================================================================================");
+                                        selectedProduct.getP_stock(), selectedProduct.getP_price(), "판매 X");
+                                System.out.println("\t=============================================================================================================");
                                 System.out.println();
 
                                 System.out.print("\t▶ 판매항목에 추가하시겠습니까?(Y/N) : ");
@@ -194,13 +215,13 @@ public class FoodAdmin implements Serializable {
                                 found2 = true;
                                 MasterRc selectedMasterRc = masterProductList.get(i);
 
-                                System.out.println("\t===========================================================================================");
+                                System.out.println("\t=============================================================================================================");
                                 System.out.printf("\t|| %5s || %5s || %5s || %5s || %5s ||\n",
                                         "구분번호", "이름", "칼로리", "금액", "재료");
                                 System.out.printf("\t|| %5d || %5s || %5d || %5d ||\n",
                                         selectedMasterRc.getR_checkNumber(), selectedMasterRc.getR_name(),
                                         selectedMasterRc.getR_totalcalorie(), selectedMasterRc.getR_price());
-                                System.out.println("\t===========================================================================================");
+                                System.out.println("\t=============================================================================================================");
 
                                 System.out.println();
                                 System.out.print("\t▶ 판매항목에 추가하시겠습니까?(Y/N) : ");
@@ -253,17 +274,17 @@ public class FoodAdmin implements Serializable {
                                 found3 = true;
                                 Product selectedProduct = allProductList.get(i);
 
-                                System.out.println("\t===========================================================================================");
+                                System.out.println("\t=============================================================================================================");
                                 System.out.printf("\t|| %5s || %5s || %5s || %9s || %5s || %5s || %5s || %5s ||\n",
                                         "구분번호", "분류번호", "이름", "단위", "개수", "칼로리", "적정재고", "금액");
-                                System.out.println("\t===========================================================================================");
+                                System.out.println("\t=============================================================================================================");
 
                                 System.out.printf("\t|| %5s || %5s || %5s || %9s || %5s || %5s || %5s || %5s ||\n",
                                         selectedProduct.getP_checkNumber(), selectedProduct.getP_material(), selectedProduct.getP_name(),
                                         selectedProduct.getP_unit(), selectedProduct.getP_count(), selectedProduct.getP_calorie(),
                                         selectedProduct.getP_stock(), selectedProduct.getP_price());
 //                                System.out.println();
-                                System.out.println("\t===========================================================================================");
+                                System.out.println("\t=============================================================================================================");
 
                                 System.out.print("\t▶ 판매항목에 제거하시겠습니까?(Y/N) : ");
                                 char x = br.readLine().charAt(0);
@@ -295,13 +316,13 @@ public class FoodAdmin implements Serializable {
                                 found4 = true;
                                 MasterRc selectedMasterRc = masterProductList.get(i);
 
-                                System.out.println("\t===========================================================================================");
+                                System.out.println("\t=============================================================================================================");
                                 System.out.printf("\t|| %5s || %5s || %5s || %5s || %5s ||\n",
                                         "구분번호", "이름", "칼로리", "금액", "재료");
                                 System.out.printf("\t|| %5d || %5s || %5d || %5d ||\n",
                                         selectedMasterRc.getR_checkNumber(), selectedMasterRc.getR_name(),
                                         selectedMasterRc.getR_totalcalorie(), selectedMasterRc.getR_price());
-                                System.out.println("\t===========================================================================================");
+                                System.out.println("\t=============================================================================================================");
 
                                 System.out.print("\t▶ 판매항목에 제거하시겠습니까?(Y/N) : ");
                                 char x = br.readLine().charAt(0);

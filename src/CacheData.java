@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CacheData {
-    static List<Order> orderOuterList = new ArrayList<>();      // 사용자 선택 바깥(틀) 리스트
+    static List<Order> orderOuterList = new ArrayList<>();      // 사용자 선택 바깥(틀) 리스트 // TODO 유저셀렉트
     static List<OrderValues> orderInnerValues;                  // 사용자 선택 안쪽(값) 리스트
     static List<Product> allProductList = new ArrayList<>();             // 사장추천이외(나만의 샐러드, 음료, 사이드, 샐러드세부재료 등)의 리스트
     static List<MasterRc> masterProductList = new ArrayList<>();            // 사장추천 리스트

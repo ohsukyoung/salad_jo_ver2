@@ -168,8 +168,8 @@ public class Product implements Serializable, Impl_admin {
                 case 1 :
                     System.out.println("\n\t[ 1. 전체 재료정보 출력 ]");
                     System.out.println("\t==========================================================================================================");
-                    System.out.printf("\t|| %5s || %5s || %5s || %9s || %5s || %5s || %5s || %5s ||\n",
-                            "구분번호", "분류번호", "이름", "단위", "개수", "칼로리", "적정재고", "금액");
+                    System.out.printf("\t|| %5s || %5s || %5s || %9s || %5s || %5s || %5s || %5s ||%5s ||\n",
+                            "구분번호", "분류번호", "이름", "단위", "개수", "칼로리", "적정재고", "금액", "판매여부");
                     System.out.println("\t==========================================================================================================");
 
                     // Iterator 활용하여 출력
@@ -177,9 +177,11 @@ public class Product implements Serializable, Impl_admin {
                     while (itList.hasNext())
                     {
                         Product itS = itList.next();
-                        System.out.printf("\t|| %5s || %5s || %5s || %9s || %5s || %5s || %5s || %5s ||\n", itS.getP_checkNumber(),
+                        String saleText = "";
+                        saleText = itS.getSaleflag()? "판매 O": "판매 X";
+                        System.out.printf("\t|| %5s || %5s || %5s || %9s || %5s || %5s || %5s || %5s || %5s ||\n", itS.getP_checkNumber(),
                                 itS.getP_material(), itS.getP_name(), itS.getP_unit(), itS.getP_count(), itS.getP_calorie(),
-                                itS.getP_stock(), itS.getP_price());
+                                itS.getP_stock(), itS.getP_price(), saleText);
                     }
                     System.out.println("\t==========================================================================================================");
                     System.out.println();
@@ -188,7 +190,7 @@ public class Product implements Serializable, Impl_admin {
                 case 2 :
                     System.out.println("\n\t[ 2. 선택 재료정보 출력 ]");
                     System.out.println("\t==========================================================================================================");
-                    System.out.printf("\t|| %5s || %5s || %5s || %9s || %5s || %5s || %5s || %5s ||\n",
+                    System.out.printf("\t|| %5s || %5s || %5s || %9s || %5s || %5s || %5s || %5s || %5s ||\n",
                             "구분번호", "분류번호", "이름", "단위", "개수", "칼로리", "적정재고", "금액");
                     System.out.println("\t==========================================================================================================");
                     System.out.println("\t*** [분류번호 안내] 1: 사장추천, 3:음료, 4:사이드, 5:베이스, 6:메인토핑, 7:사이드토핑, 8:소스");
@@ -228,9 +230,11 @@ public class Product implements Serializable, Impl_admin {
                         Product itS = itList1.next();
                         if (itS.getP_material() == materialNumber)
                         {
-                            System.out.printf("\t|| %5s || %5s || %5s || %9s || %5s || %5s || %5s || %5s ||\n", itS.getP_checkNumber(),
+                            String saleText = "";
+                            saleText = itS.getSaleflag()? "판매 O": "판매 X";
+                            System.out.printf("\t|| %5s || %5s || %5s || %9s || %5s || %5s || %5s || %5s ||%5s ||\n", itS.getP_checkNumber(),
                                     itS.getP_material(), itS.getP_name(), itS.getP_unit(), itS.getP_count(), itS.getP_calorie(),
-                                    itS.getP_stock(), itS.getP_price());
+                                    itS.getP_stock(), itS.getP_price(), saleText);
                         }
                     }
                     System.out.println("\t==========================================================================================================");
@@ -350,14 +354,16 @@ public class Product implements Serializable, Impl_admin {
                 found = true;
                 Product itS = product.get(i);
 
+                String saleText = "";
+                saleText = itS.getSaleflag()? "판매 O": "판매 X";
 				System.out.println("\t==========================================================================================================");
-                System.out.printf("\t|| %5s || %5s || %5s || %9s || %5s || %5s || %5s || %5s ||\n",
-                        "구분번호", "분류번호", "이름", "단위", "개수", "칼로리", "적정재고", "금액");
+                System.out.printf("\t|| %5s || %5s || %5s || %9s || %5s || %5s || %5s || %5s || %5s ||\n",
+                        "구분번호", "분류번호", "이름", "단위", "개수", "칼로리", "적정재고", "금액", "판매여부");
                 System.out.println("\t==========================================================================================================");
                 System.out.printf("\t|| %5s || %5s || %5s || %9s || %5s || %5s || %5s || %5s ||\n",
                         itS.getP_checkNumber(), itS.getP_material(), itS.getP_name(),
                         itS.getP_unit(), itS.getP_count(), itS.getP_calorie(),
-                        itS.getP_stock(), itS.getP_price());
+                        itS.getP_stock(), itS.getP_price(), saleText);
                 System.out.println("\t==========================================================================================================");
 
                 System.out.println("\n\t[ 변경할 내용 선택 ]-----------------------------------------------------");
@@ -511,15 +517,17 @@ public class Product implements Serializable, Impl_admin {
                 Iterator<Product> itList;
                 itList = product.iterator();
                 Product itS = product.get(i);
-				
-				System.out.println("\t==========================================================================================================");
-                System.out.printf("\t|| %5s || %5s || %5s || %9s || %5s || %5s || %5s || %5s ||\n",
-                        "구분번호", "분류번호", "이름", "단위", "개수", "칼로리", "적정재고", "금액");
+
+                String saleText = "";
+                saleText = itS.getSaleflag()? "판매 O": "판매 X";
                 System.out.println("\t==========================================================================================================");
-                System.out.printf("\t|| %5s || %5s || %5s || %9s || %5s || %5s || %5s || %5s ||\n",
+                System.out.printf("\t|| %5s || %5s || %5s || %9s || %5s || %5s || %5s || %5s || %5s ||\n",
+                        "구분번호", "분류번호", "이름", "단위", "개수", "칼로리", "적정재고", "금액", "판매여부");
+                System.out.println("\t==========================================================================================================");
+                System.out.printf("\t|| %5s || %5s || %5s || %9s || %5s || %5s || %5s || %5s || %5s ||\n",
                         itS.getP_checkNumber(), itS.getP_material(), itS.getP_name(),
                         itS.getP_unit(), itS.getP_count(), itS.getP_calorie(),
-                        itS.getP_stock(), itS.getP_price());
+                        itS.getP_stock(), itS.getP_price(), saleText);
 				System.out.println("\t==========================================================================================================");
                 System.out.println();
                 System.out.println();

@@ -114,10 +114,10 @@ class MasterRc implements Serializable ,Impl_admin
         List<MasterRc> masterProduct = CacheData.masterProductList;
 
         System.out.println("\n\t[ 1. 사장 추천 조합 출력 ]");
-        System.out.println("\t===========================================================================================");
+        System.out.println("\t=============================================================================================================");
         System.out.printf("\t|| %5s || %8s || %5s || %5s || %5s || %5s \n",
                 "구분번호", "이름", "칼로리", "금액", "개수", "재료(" + materialDetailCount +")");
-        System.out.println("\t===========================================================================================");
+        System.out.println("\t=============================================================================================================");
 
         // existingList2에 있는 MasterRc 객체를 출력
         for (MasterRc masterRc : masterProduct)
@@ -144,7 +144,7 @@ class MasterRc implements Serializable ,Impl_admin
                 System.out.println();
             }
         }
-        System.out.println("\t===========================================================================================");
+        System.out.println("\t=============================================================================================================");
 
         KioskMg.masterrcflag = false;
 
@@ -158,10 +158,10 @@ class MasterRc implements Serializable ,Impl_admin
         try {
             System.out.println();
             System.out.println("\n\t[ 2. 신규 사장 추천 조합 등록 ]");
-            System.out.println("\t===========================================================================================");
+            System.out.println("\t=============================================================================================================");
             System.out.printf("\t|| %5s || %5s || %5s || %5s || %5s ||\n",
                     "구분번호", "이름", "칼로리", "금액", "재료(" + materialDetailCount +")");
-            System.out.println("\t===========================================================================================");
+            System.out.println("\t=============================================================================================================");
 
             List<Product> selectedProducts = new ArrayList<>();
             List<Product> product = CacheData.allProductList;
@@ -273,7 +273,7 @@ class MasterRc implements Serializable ,Impl_admin
                     found = true;
                     MasterRc masterRc = existingList2.get(i);
 
-                    System.out.println("\t===========================================================================================");
+                    System.out.println("\t=============================================================================================================");
                     System.out.printf("\t|| %5s || %5s || %5s || %5s || %5s ||\n",
                             "구분번호", "이름", "칼로리", "금액", "재료");
                     System.out.printf("\t|| %5d || %5s || %5d || %5d ||",
@@ -285,7 +285,7 @@ class MasterRc implements Serializable ,Impl_admin
                         System.out.print(" "+product.getP_name());
                     }
                     System.out.println(" ||");
-                    System.out.println("\t===========================================================================================");
+                    System.out.println("\t=============================================================================================================");
 
                     System.out.println("\t변경할 내용을 선택하시오.");
                     System.out.println("\t1.구분번호 2. 이름 3. 금액");
@@ -367,7 +367,7 @@ class MasterRc implements Serializable ,Impl_admin
                     found = true;
                     MasterRc masterRc = existingList2.get(i);
 
-                    System.out.println("\t===========================================================================================");
+                    System.out.println("\t=============================================================================================================");
                     System.out.printf("\t|| %5s || %5s || %5s || %5s || %5s ||\n",
                             "구분번호", "이름", "칼로리", "금액", "재료");
                     System.out.printf("\t|| %5d || %5s || %5d || %5d ||",
@@ -379,7 +379,7 @@ class MasterRc implements Serializable ,Impl_admin
                         System.out.print(" "+product.getP_name());
                     }
                     System.out.println(" ||");
-                    System.out.println("\t===========================================================================================");
+                    System.out.println("\t=============================================================================================================");
 
                     System.out.print("\t삭제하시겠습니까?(Y/N) : ");
                     char x = br.readLine().charAt(0);

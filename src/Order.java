@@ -61,7 +61,7 @@ public class Order implements Serializable{
     private String o_name;  // 회원아이디
     private String o_nowTime;   // 결재시간
 
-    List<OrderValues> innerList = new ArrayList<OrderValues>();
+    List<OrderValues> innerList = new ArrayList<OrderValues>(); //TODO 장바구니리스트 수정
     //    UserProduct o_userPd;
     private int o_totCalorie;
     private int o_totPrice;
