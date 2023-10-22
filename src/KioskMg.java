@@ -46,7 +46,7 @@ public class KioskMg
     MemberMg mm = new MemberMg();
     public static boolean memflag;
     public static boolean salesflag;
-    public static boolean foodadminflag;
+    public static boolean stockflag;
     public static boolean ingredientflag;
     public static boolean masterrcflag;
     static
@@ -88,10 +88,11 @@ public class KioskMg
         MemberMg mm = new MemberMg();
         SalesMg sm = new SalesMg();
         IngredientMg im = new IngredientMg();
+        StockMg stm = new StockMg();
 
 
         // 클래스를 활용하여 처리
-        if (sel==E_STOCKMG){
+        if (sel==E_STOCKMG){        // 1. 재고 관리
             // 1. 판매 관리
 //            FoodAdmin foodadmin = new FoodAdmin();
 //            foodadminflag = true;
@@ -123,34 +124,18 @@ public class KioskMg
 ////            AdminMenu adminmenu = new AdminMenu();
 ////            adminmenu.printproduct();
 //            }
-            FoodSetting foodSetting = new FoodSetting();
-            foodadminflag = true;
-            System.out.println("\n\t[ 재고관리 ]===============");
-            System.out.printf("\t1. 재료셋팅\n\t2. 품절관리\n");
-            System.out.println("\t=========================");
-            while(foodadminflag) {
-                try {
-                    System.out.print("\t▶ 메뉴선택(1~2) : ");
-                    check = Integer.parseInt(br.readLine());
-                }
-                catch (NumberFormatException e){
-                }
-                switch (check){
-                    case 1:
-                        foodSetting.product_setting();
-                        return;
-                    case 2:
-                        foodSetting.soldout_management();
-                        return;
-                    default:
-                        System.out.println("\t[!] 입력된 숫자가 옳지 않습니다.");
-                        break;
-                }
-
+            StockMg stockMg = new StockMg();
+            stockflag = true;
+            while(stockflag)
+            {
+                stm.menuDisp();
+                stm.menuSelect();
+                stm.menuRun();
             }
+
+
         }
-        else if (sel==E_INGMG){
-            // 2. 재료 관리
+        else if (sel==E_INGMG){     // 2. 재료 관리
             ingredientflag = true;
             while(ingredientflag)
             {

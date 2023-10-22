@@ -1,11 +1,53 @@
 import java.io.*;
-import java.util.Iterator;
+import java.util.HashMap;
 import java.util.List;
 
-public class FoodSetting implements Serializable {
+public class StockMg implements Serializable {
 // 재고관리 메뉴 클래스
+
+    public final int E_SETTING = 1;                    //-- 요소(회원) 추가
+    public final int E_SOLDOUT = 2;
+    public final int E_EXIT = 3;
+    private static BufferedReader br;		         //-- 사용자가 입력시 활용
+    private static Integer sel;				         //-- 선택 값
+
     List<Product> allProductList = CacheData.allProductList;
-    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+    static
+    {
+        //BufferedReader 객체 생성
+        br = new BufferedReader(new InputStreamReader(System.in));
+
+        // 사용자 입력값 초기화
+        sel = 1;
+    }
+
+
+
+    public void menuDisp()
+    {
+        System.out.println("\n\t[ 재고관리 메뉴 선택 ]===========");
+        System.out.println("\t1. 재료셋팅");
+        System.out.println("\t2. 품절관리");
+        System.out.println("\t3. 관리자 메뉴 화면으로 이동");
+        System.out.println("\t=================================");
+        System.out.print("\t▶ 메뉴 선택(1~3) : ");
+    }
+    public void menuSelect() throws IOException, NumberFormatException
+    {
+        sel = Integer.parseInt(br.readLine());
+    }
+    public void menuRun() throws IOException, ClassNotFoundException
+    {
+        switch (sel)
+        {
+            case E_SETTING : product_setting(); break;
+            case E_SOLDOUT : soldout_management(); break;
+            case E_EXIT : exit(); break;
+            default : System.out.print("\t[!] 메뉴 선택 오류");
+        }
+    }
+
 
     public void product_setting() throws IOException, ClassNotFoundException {
         System.out.println("\n\t[ 1. 재료세팅 ]");
@@ -50,8 +92,6 @@ public class FoodSetting implements Serializable {
                 } else {
                     System.out.println("\t▶ 구분번호가 존재하지 않습니다.");
                 }
-
-                KioskMg.foodadminflag = false;
                 break;
 
             } catch (NumberFormatException e) {
@@ -104,8 +144,6 @@ public class FoodSetting implements Serializable {
                 } else {
                     System.out.println("\t▶ 구분번호가 존재하지 않습니다.");
                 }
-
-                KioskMg.foodadminflag = false;
                 break;
 
             } catch (NumberFormatException e) {
@@ -113,4 +151,9 @@ public class FoodSetting implements Serializable {
             }
         }
     } // soldout_management
+    public void exit()
+    {
+        System.out.println("\n\t「 관리자 메뉴로 돌아갑니다. 」");
+        KioskMg.stockflag = false;
+    }
 }

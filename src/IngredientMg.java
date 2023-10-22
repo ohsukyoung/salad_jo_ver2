@@ -14,24 +14,21 @@ public class IngredientMg implements Impl_admin{
     public final int E_DEL = 4;
     public final int E_EXIT = 5;
 
-    public static HashMap<String, Member> hm; //-- 자료구조 선언
+
     private static BufferedReader br;		         //-- 사용자가 입력시 활용
     private static Integer sel;				         //-- 선택 값
-    private static String con;				         //-- 계속 진행 여부
+
 
     Product product = new Product();
 
     static
     {
-        //hashmap 자료구조 생성
-        hm = new HashMap<String, Member>();
-
         //BufferedReader 객체 생성
         br = new BufferedReader(new InputStreamReader(System.in));
 
         // 사용자 입력값 초기화
         sel = 1;
-        con = "Y";
+
     }
     public void menuDisp()
     {
