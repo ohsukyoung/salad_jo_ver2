@@ -27,7 +27,6 @@ public class InfoService implements Imp_info {
             selectContinue.menuSelectProduct(productList);
         }else {
             // 리스트 출력
-//            List<MasterRc> masterList = CacheData.masterProductList;
             List<MasterRc> masterList = pdInterface.getListMasterRc(productType);
             printInfoHeader(productType);
             printInfoBodyMaster(productType, masterList);
@@ -68,12 +67,6 @@ public class InfoService implements Imp_info {
                 }
             }
             System.out.printf("\t %-12s\n", materialDetail);
-
-//            for (Product product : masterRc.getR_products())
-//            {
-//                System.out.print(" " + product.getP_name());
-//            }
-//            System.out.println();
         }
         System.out.println("\t---------------------------------------------------------------------------------------------------------------------");
     }

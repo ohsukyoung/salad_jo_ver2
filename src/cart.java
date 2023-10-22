@@ -559,10 +559,6 @@ class cart
 			System.out.println("¦¢       							¦¢");
             System.out.println("¦¢ [ ¿µ¼öÁõ ] »ø·¯µå¸ÔÁ¶      			                ¦¢");
 
-            OrderSetting orderSetting = new OrderSetting();
-            //orderSetting.calculateOrderTotal();
-            //orderSetting.printOrderList();
-
             int i=1,j=1;
 
             OrderCart oC = new OrderCart();
@@ -583,9 +579,7 @@ class cart
             {
                 OrderList.get(OrderList.size()-1).setUsedPoints(emptypoint);
                 OrderList.get(OrderList.size()-1).setO_name(id);
-                //System.out.println(OrderList.get(OrderList.size()-1));
                 OrderList.get(OrderList.size()-1).setMember(true);
-                //System.out.println(OrderList.get(OrderList.size()-1));
                 payPoint = MemberMg.hm.get(id).getMemPoint() - emptypoint + (int)(memberTotal*0.1);
                 MemberMg.hm.get(id).setMemPoint(payPoint);
             }else {

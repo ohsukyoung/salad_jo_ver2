@@ -62,10 +62,8 @@ public class IngredientMg implements Impl_admin{
         }
     }
 
-
     @Override
     public void ad_print() throws IOException, ClassNotFoundException {
-
         List<Product> allProductList = CacheData.allProductList;
 
         System.out.println("\n\t[ 1. 재료정보 출력 ]===============");
@@ -148,7 +146,6 @@ public class IngredientMg implements Impl_admin{
 
                     }
 
-
                     // Iterator 활용하여 선택한 분류번호에 해당하는 재료정보 출력
                     Iterator<Product> itList1 = allProductList.iterator();
                     while (itList1.hasNext())
@@ -172,18 +169,14 @@ public class IngredientMg implements Impl_admin{
                 default:
                     System.out.println("\t[!] 잘못된 입력입니다. 다시 입력하세요.");
                     continue;
-
             }
 
         }
 
     }
 
-
     @Override
     public void ad_add() throws IOException,ClassNotFoundException {
-
-        //자료구조 생성
         List<Product> allProductList = CacheData.allProductList;
 
         boolean shouldExit = false;
@@ -244,7 +237,6 @@ public class IngredientMg implements Impl_admin{
                     // 직렬화 주석 231018
 //                    FileMg f = new FileMg();
 //                    f.list1FileOut();
-//                    f.list3FileOut();
 
                     System.out.println("\t「 저장되었습니다. 」");
                 } else {
@@ -263,7 +255,6 @@ public class IngredientMg implements Impl_admin{
     @Override
     public void ad_modify() throws IOException, ClassNotFoundException {
         List<Product> allProductList = CacheData.allProductList;
-//        List<Product> list3 = CacheData.list3;
         int modifyNum = 9;
 
         System.out.println("\n\t[ 3. 재료정보 변경 ]");
@@ -319,7 +310,6 @@ public class IngredientMg implements Impl_admin{
                         // 직렬화 주석 231018
 //                        FileMg f = new FileMg();
 //                        f.list1FileOut();
-//                        f.list3FileOut();
                         System.out.println("\t「 수정되었습니다. 」");
                         return; // 메소드를 빠져나갑니다.
                     } else if (choice < 1 || choice > modifyNum) {
@@ -335,83 +325,38 @@ public class IngredientMg implements Impl_admin{
                                 case 1:
                                     int newCheckNumber = Integer.parseInt(newValue);
                                     itS.setP_checkNumber(newCheckNumber);
-//                                    for (Product p : allProductList) {
-//                                        if (p.getP_checkNumber() == pointNumber) {
-//                                            p.setP_checkNumber(newCheckNumber);
-//                                        }
-//                                    }
                                     break;
                                 case 2:
                                     int newMaterial = Integer.parseInt(newValue);
                                     itS.setP_material(newMaterial);
-//                                    for (Product p : allProductList) {
-//                                        if (p.getP_checkNumber() == pointNumber) {
-//                                            p.setP_material(newMaterial);
-//                                        }
-//                                    }
                                     break;
                                 case 3:
                                     itS.setP_name(newValue);
-//                                    for (Product p : allProductList) {
-//                                        if (p.getP_checkNumber() == pointNumber) {
-//                                            p.setP_name(newValue);
-//                                        }
-//                                    }
                                     break;
                                 case 4:
                                     itS.setP_unit(newValue);
-//                                    for (Product p : allProductList) {
-//                                        if (p.getP_checkNumber() == pointNumber) {
-//                                            p.setP_unit(newValue);
-//                                        }
-//                                    }
                                     break;
                                 case 5:
                                     int newCount = Integer.parseInt(newValue);
                                     itS.setP_count(newCount);
-//                                    for (Product p : allProductList) {
-//                                        if (p.getP_checkNumber() == pointNumber) {
-//                                            p.setP_count(newCount);
-//                                        }
-//                                    }
                                     break;
                                 case 6:
                                     int newCalorie = Integer.parseInt(newValue);
                                     itS.setP_calorie(newCalorie);
-//                                    for (Product p : allProductList) {
-//                                        if (p.getP_checkNumber() == pointNumber) {
-//                                            p.setP_calorie(newCalorie);
-//                                        }
-//                                    }
                                     break;
                                 case 7:
                                     int newStock = Integer.parseInt(newValue);
                                     itS.setP_stock(newStock);
-//                                    for (Product p : allProductList) {
-//                                        if (p.getP_checkNumber() == pointNumber) {
-//                                            p.setP_stock(newStock);
-//                                        }
-//                                    }
                                     break;
                                 case 8:
                                     int newPrice = Integer.parseInt(newValue);
                                     itS.setP_price(newPrice);
-//                                    for (Product p : allProductList) {
-//                                        if (p.getP_checkNumber() == pointNumber) {
-//                                            p.setP_price(newPrice);
-//                                        }
-//                                    }
                                     break;
                                 case 9:
                                     int newSale = Integer.parseInt(newValue);
                                     boolean p_saleflag = false;
                                     p_saleflag = newSale == 1? true : false;
                                     itS.setSaleflag(p_saleflag);
-//                                    for (Product p : allProductList) {
-//                                        if (p.getP_checkNumber() == pointNumber) {
-//                                            p.setSaleflag(p_saleflag);
-//                                        }
-//                                    }
                                     break;
                             }
                         } catch (NumberFormatException e) {
@@ -428,12 +373,9 @@ public class IngredientMg implements Impl_admin{
 
     }
 
-
-
     @Override
     public void ad_delete() throws IOException, ClassNotFoundException {
         List<Product> allProductList = CacheData.allProductList;
-//        List<Product> list3 = CacheData.list3;
 
         System.out.println("\n\t[ 4. 재료정보 삭제 ]");
         System.out.print("\t▶ 작업할 대상의 구분번호 입력 (뒤로가기:0) : ");
@@ -481,12 +423,6 @@ public class IngredientMg implements Impl_admin{
                 if (x == 'Y' || x == 'y') {
                     deleteIndex = i-1; // 삭제 대상 제품의 인덱스 설정
                     allProductList.remove(deleteIndex);
-//                    for (Iterator<Product> iterator = list3.iterator(); iterator.hasNext(); ) {
-//                        Product p = iterator.next();
-//                        if (p.getP_checkNumber() == pointNumber) {
-//                            iterator.remove(); // list3에서 안전하게 제거
-//                        }
-//                    }
                     System.out.println("\t「 삭제되었습니다. 」");
                     break;
                 } else if (x == 'N' || x == 'n') {
@@ -502,17 +438,6 @@ public class IngredientMg implements Impl_admin{
             System.out.println("\t[!] 구분번호가 일치하지 않습니다.");
             return; // 일치하지 않으면 삭제 작업을 하지 않고 종료
         }
-
-        // 삭제 대상 재료가 설정된 경우에만 삭제 수행
-//        if (deleteIndex != -1) {
-//            product.remove(deleteIndex);
-//
-//            // 직렬화 주석 231018
-////            FileMg f = new FileMg();
-////            f.list1FileOut();
-////            f.list3FileOut();
-//            System.out.println("\t「 삭제되었습니다. 」");
-//        }
 
     }
     public void exit()

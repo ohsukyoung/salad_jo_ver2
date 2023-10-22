@@ -6,7 +6,7 @@ import java.util.List;
 */
 class Kiosk {
     final String USER_NAME = "고객";      //-- 사용자 임의의 이름
-    public Imp_info info;                      //-- info 틀 생성
+    public Imp_info info;                //-- info 틀 생성
 
     static boolean storeflag = true;
 
@@ -79,7 +79,6 @@ class Kiosk {
         }
 
         // 선택값 배열-유저 임시 이름 넣기
-
         if (OrderList.isEmpty()) {
             OrderList.add(new Order(USER_NAME + 1, "20231012100200", 0, 0));
         }

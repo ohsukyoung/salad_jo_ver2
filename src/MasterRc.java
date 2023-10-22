@@ -10,7 +10,6 @@ import java.io.Serializable;
 class MasterRc implements Serializable, Impl_admin
 {
     private static final long serialVersionUID = -2026629343147755130L;
-    Product product = new Product();
     String appDir = System.getProperty("user.dir");
     private transient BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
@@ -56,14 +55,6 @@ class MasterRc implements Serializable, Impl_admin
         this.r_discount = r_discount;
         this.r_count = r_count;
         this.Saleflag = Saleflag;
-    }
-
-    public MasterRc(int r_checkNumber, String r_name, int r_totalcalorie, int r_price, List<Product> r_products)
-    {
-        this.r_checkNumber = r_checkNumber;
-        this.r_name = r_name;
-        this.r_price = r_price;
-        this.r_products = r_products;
     }
 
     public MasterRc() {
@@ -148,35 +139,6 @@ class MasterRc implements Serializable, Impl_admin
 
     public void setR_details(int r_details) {
         this.r_details = new int[]{r_details};
-    }
-
-    // MasterRc 객체 내의 재료의 총 칼로리 계산
-    private int calculateTotalCalorie(List<Product> products) {
-        int totalCalorie = 0;
-        for (Product product : products) {
-            totalCalorie += product.getP_calorie();
-        }
-        r_totalcalorie = totalCalorie;
-        return totalCalorie;
-    }
-
-    // MasterRc 객체 내의 재료의 총 금액 계산
-    private int calculateTotalPrice(List<Product> products) {
-        int totalPrice = 0;
-        for (Product product : products) {
-            totalPrice += product.getP_price();
-        }
-        return totalPrice;
-    }
-
-    // MasterRc 객체 내의 재고 개수 계산
-    public int calculateMinCount(List<Product> products) {
-        int minCount = 10000;
-        for (Product product : products) {
-            if (minCount > product.getP_count())
-                minCount = product.getP_count();
-        }
-        return minCount;
     }
 
     // MasterRc 객체 내의 재료의 총 칼로리 계산
@@ -280,10 +242,8 @@ class MasterRc implements Serializable, Impl_admin
                 "구분번호", "이름", "칼로리", "금액", "개수", "판매여부", "재료(" + materialDetailCount + ")");
         System.out.println("\t=============================================================================================================");
 
-        // existingList2에 있는 MasterRc 객체를 출력
+        // MasterRc 객체를 출력
         for (MasterRc masterRc : masterProductList) {
-//            if (masterRc.getSaleflag()) {     // 판매정보가 true 일때
-            
             // 판매정보 출력
             String saleText = "";
             saleText = masterRc.getSaleflag() ? SaleTrue : SaleFalse;
@@ -298,11 +258,6 @@ class MasterRc implements Serializable, Impl_admin
 
             // 상세재료 출력
             String materialDetail = "";
-//            for (int i = 0; i < masterRc.getR_products().size(); i++) {
-//                if (i != 0) materialDetail += ", ";
-//                String materialItem = masterRc.getR_products().get(i).getP_name();
-//                materialDetail += materialItem;
-//            }
             for (int i = 0; i < masterRc.getR_details().length; i++) {
                 for (Product p1 : CacheData.allProductList) {
                     if (masterRc.getR_details()[i] == p1.getP_checkNumber()){
@@ -316,7 +271,6 @@ class MasterRc implements Serializable, Impl_admin
             }
             System.out.printf("|| %-12s\n", materialDetail);
 
-
             // 재료정보 출력
             for (int i = 0; i < masterRc.getR_details().length; i++) {
                 for (Product p1 : CacheData.allProductList) {
@@ -325,19 +279,12 @@ class MasterRc implements Serializable, Impl_admin
                     }
                 }
             }
-//            for (Product product : masterRc.getR_products()) {
-//                System.out.printf("\t- 상세재료: %8s\t|| 재료개수: %5d\n", product.getP_name(), product.getP_count());
-//            }
-//            }
         }
         System.out.println("\t=============================================================================================================");
-
-
     }
 
-
     @Override
-    public void ad_add() throws IOException, ClassNotFoundException {
+    public void ad_add() throws IOException{
         List<MasterRc> masterProductList = CacheData.masterRcList;
 
         try {
@@ -350,18 +297,12 @@ class MasterRc implements Serializable, Impl_admin
 
             List<Product> selectedProducts = new ArrayList<>();
             int[] detailNum = new int[materialDetailCount];
-//            List<Product> product = ;
-
 
             int idx = 1;
             System.out.printf("\n\t*** [안내] 조합에 들어갈 재료의 갯수: %d ***\n", materialDetailCount);
             while (idx <= materialDetailCount) {
                 System.out.print("\t▶ 조합에 들어갈 재료(" + idx + ")의 구분번호 입력: ");
                 int pointNumber = Integer.parseInt(br.readLine());
-//                if (pointNumber == 0) {
-//                    break;
-//                }
-
                 boolean found = false;
 
                 for (Product p : CacheData.allProductList) {
@@ -379,9 +320,6 @@ class MasterRc implements Serializable, Impl_admin
                                 }
                             }
                         }
-//                        for (Product selected : selectedProducts) {
-//                            System.out.println("\t\t-이름 : " + selected.getP_name() + ", 갯수 : " + selected.getP_count());
-//                        }
                     }
                 }
 
@@ -389,13 +327,6 @@ class MasterRc implements Serializable, Impl_admin
                     System.out.println("\t[!] 구분번호가 일치하지 않습니다.");
                 }
             }
-
-//            // 칼로리 총합 계산
-//            r_totalcalorie = calculateTotalCalorie(selectedProducts);
-//            // 금액 총합 계산
-//            int originTotalPrice = calculateTotalPrice(selectedProducts);
-//            // 재고 개수 계산
-//            r_count = calculateMinCount(selectedProducts);
 
             // 칼로리 총합 계산
             int calTotalcalorie = calculateTotalCalorie_01(detailNum);
@@ -452,9 +383,8 @@ class MasterRc implements Serializable, Impl_admin
 
     }
 
-
     @Override
-    public void ad_modify() throws IOException, ClassNotFoundException {
+    public void ad_modify() throws IOException {
         List<MasterRc> masterProductList = CacheData.masterRcList;
         int modifyNum = 9;
 
@@ -469,7 +399,6 @@ class MasterRc implements Serializable, Impl_admin
         for (MasterRc masterRc : masterProductList) {
             if (pointNumber == masterRc.getR_checkNumber()) {
                 found = true;
-//                MasterRc masterRc = existingList2.get(i);
 
                 System.out.println("\t=============================================================================================================");
                 System.out.printf("\t|| %5s || %5s || %5s || %5s || %5s || %5s || %5s ||\n",
@@ -500,11 +429,6 @@ class MasterRc implements Serializable, Impl_admin
                         }
                     }
                 }
-//                for (int j = 0; j < masterRc.getR_products().size(); j++) {
-//                    if (j != 0) materialDetail += ", ";
-//                    String materialItem = masterRc.getR_products().get(j).getP_name();
-//                    materialDetail += materialItem;
-//                }
                 System.out.printf("|| %-12s\n", materialDetail);
                 System.out.println("\t=============================================================================================================");
 
@@ -526,7 +450,6 @@ class MasterRc implements Serializable, Impl_admin
 
                     if (choice == 0) {
 //                            f.list2FileOut();
-//                            f.list4FileOut();
                         System.out.println("\t「 수정되었습니다. 」");
                         break;
                     } else if (choice < 1 || choice > modifyNum) {
@@ -574,11 +497,10 @@ class MasterRc implements Serializable, Impl_admin
 
 
     @Override
-    public void ad_delete() throws IOException, ClassNotFoundException {
+    public void ad_delete() throws IOException{
         try {
             // 역직렬화 기존 데이터 불러오기
             List<MasterRc> masterProductList = CacheData.masterRcList;
-//            List<MasterRc> list4 = CacheData.list4;
             // 직렬화 주석 231018
             //FileMg f = new FileMg();
 
@@ -591,9 +513,7 @@ class MasterRc implements Serializable, Impl_admin
 
             for (MasterRc masterRc : masterProductList) {
                 if (pointNumber == masterRc.getR_checkNumber()) {
-
                     found = true;
-//                    MasterRc masterRc = masterRcs.get(i);
 
                     System.out.println("\t=============================================================================================================");
                     System.out.printf("\t|| %5s || %-9s || %5s || %5s || %5s || %5s || %5s ||\n",
@@ -633,12 +553,6 @@ class MasterRc implements Serializable, Impl_admin
                     if (x == 'Y' || x == 'y') {
                         deleteIndex = pointNumber-1; // 삭제 대상 재료의 인덱스 설정
                         masterProductList.remove(deleteIndex);
-//                        for (Iterator<MasterRc> iterator = list4.iterator(); iterator.hasNext(); ) {
-//                            MasterRc p = iterator.next();
-//                            if (p.getR_checkNumber() == pointNumber) {
-//                                iterator.remove(); // list4에서 안전하게 제거
-//                            }
-//                        }
                         System.out.println("\t「 삭제되었습니다. 」");
                         break;
                     } else {
@@ -653,14 +567,6 @@ class MasterRc implements Serializable, Impl_admin
                 return; // 일치하지 않으면 삭제 작업을 하지 않고 종료
             }
 
-            // 삭제 대상 재료가 설정된 경우에만 삭제 수행
-//            if (deleteIndex != -1) {
-//                masterRcs.remove(deleteIndex);
-//                System.out.println("\t「 삭제되었습니다. 」");
-//
-////                f.list2FileOut();
-////                f.list4FileOut();
-//            }
         } catch (NumberFormatException e) {
             System.out.println("\t[!] 잘못된 입력입니다. 다시 입력하세요.");
         }
