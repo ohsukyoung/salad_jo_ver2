@@ -142,6 +142,7 @@ public class IngredientMg implements Impl_admin{
                         catch (NumberFormatException e)
                         {
                             System.out.println("\t[!] 잘못된 입력입니다. 다시 입력하세요.");
+
                         }
 
                     }

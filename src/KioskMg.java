@@ -14,11 +14,10 @@ public class KioskMg
 
     private static BufferedReader br;		         //-- 사용자가 입력시 활용
     private static Integer sel;				         //-- 선택 값
-    private static String con;				         //-- 계속 진행 여부
-    private static int check;
 
-    private static boolean Exit = false;  // 종료 여부를 나타내는 변수
-    // 사용자가 장바구니를 종료하도록 선택한 경우 호출
+
+//    private static boolean Exit = false;  // 종료 여부를 나타내는 변수
+
     public static void exitCart()
     {
         try {
@@ -36,7 +35,7 @@ public class KioskMg
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
-        Exit = true;
+//        Exit = true;
         System.exit(0);
     }
 
@@ -53,7 +52,6 @@ public class KioskMg
 
         // 사용자 입력값 초기화
         sel = 1;
-        con = "Y";
 
     }
 

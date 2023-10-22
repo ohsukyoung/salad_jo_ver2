@@ -22,9 +22,9 @@ public class Main {
         ad_login al = new ad_login();
         al.adLogin();
 
-        // 객체 파일 내보내기
-        f.memberFileOut();
-        f.receiptFileOut();
+//        // 객체 파일 내보내기
+//        f.memberFileOut();
+//        f.receiptFileOut();
 
 //        // 환영인사 //TODO 꾸밀때 넣기
 //        Emp emp = new Emp(":)");
