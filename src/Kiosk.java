@@ -14,6 +14,9 @@ class Kiosk {
         this.info = new InfoService(productService);
     }
     public void kioskStart() throws IOException {
+        Emp emp = new Emp("^ㅁ^");
+        emp.empWelcome();
+
         storePack();    // 포장 or 매장 여부
         menuDisp();     // 사용자 메뉴 선택
 

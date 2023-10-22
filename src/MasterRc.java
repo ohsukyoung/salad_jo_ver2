@@ -491,8 +491,6 @@ class MasterRc implements Serializable, Impl_admin
         if (!found) {
             System.out.println("\t[!] 구분번호가 일치하지 않습니다.");
         }
-
-        KioskMg.masterrcflag = false;
     }
 
 

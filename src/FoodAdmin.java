@@ -19,10 +19,8 @@ public class FoodAdmin implements Serializable {
     String SaleFalse = " 판매 X";
 
     public void setting_print() throws IOException, ClassNotFoundException{
-        // 직렬화 주석 231018
 //        FileMg f = new FileMg();
 //        f.list1FileIn();
-//        f.list2FileIn();
 
         System.out.println("\n\t[ 판매정보 출력 ]===============");
         System.out.println("\t1. 판매 재료정보 출력\n\t2. 판매 사장추천 정보 출력");
@@ -241,7 +239,6 @@ public class FoodAdmin implements Serializable {
     }
 
     public void soldout_management() throws IOException, ClassNotFoundException {
-
         while (true) {
             try {
                 System.out.println("\n\t[ 3. 판매항목 제거 ]============");

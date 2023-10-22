@@ -84,6 +84,8 @@ public class StockMg implements Serializable {
                         System.out.print("\t▶ 변경할 항목의 개수 입력 : ");
                         int newCount = Integer.parseInt(br.readLine());
                         allProductList.get(i).setP_count(newCount);
+
+                        break;
                     }
                 }
 

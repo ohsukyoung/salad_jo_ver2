@@ -21,24 +21,21 @@ public class KioskMg
     // 사용자가 장바구니를 종료하도록 선택한 경우 호출
     public static void exitCart()
     {
-//        try {
+        try {
             // 객체 직렬화
-            // 직렬화 주석 231018
-//            FileMg f = new FileMg();
-//            f.memberFileOut();
-//            f.receiptFileOut();
-//            f.list1FileOut();
-//            f.list2FileOut();
-//            f.list3FileOut();
-//            f.list4FileOut();
-//        } catch (IOException e) {
-//            System.out.println("e.toString: " + e.toString());
-//            System.out.println("e.getMessage: " + e.getMessage());
-//            System.out.println("printStackTrace................");
-//            e.printStackTrace();
-//        } catch (ClassNotFoundException e) {
-//            throw new RuntimeException(e);
-//        }
+            FileMg f = new FileMg();
+            f.memberFileOut();
+            f.receiptFileOut();
+            f.list1FileOut();
+            f.list2FileOut();
+        } catch (IOException e) {
+            System.out.println("e.toString: " + e.toString());
+            System.out.println("e.getMessage: " + e.getMessage());
+            System.out.println("printStackTrace................");
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
         Exit = true;
         System.exit(0);
     }
@@ -94,36 +91,34 @@ public class KioskMg
 
         // 클래스를 활용하여 처리
         if (sel==E_STOCKMG){        // 1. 재고 관리
-//            FoodAdmin foodadmin = new FoodAdmin();
-//            foodadminflag = true;
-//            System.out.println("\n\t[ 판매관리 ]===============");
-//            System.out.printf("\t1. 판매정보 출력\n\t2. 판매항목 세팅\n\t3. 판매항목 제거\n");
-//            System.out.println("\t=========================");
-//            while(foodadminflag) {
-//                try {
-//                    System.out.print("\t▶ 메뉴선택(1~3) : ");
-//                    check = Integer.parseInt(br.readLine());
-//                }
-//                catch (NumberFormatException e){
-//                }
-//                switch (check){
-//                    case 1:
-//                        foodadmin.setting_print();
-//                        return;
-//                    case 2:
-//                        foodadmin.product_setting();
-//                        return;
-//                    case 3:
-//                        foodadmin.soldout_management();
-//                        return;
-//                    default:
-//                        System.out.println("\t[!] 입력된 숫자가 옳지 않습니다.");
-//                        break;
-//                }
-//
-////            AdminMenu adminmenu = new AdminMenu();
-////            adminmenu.printproduct();
-//            }
+//            @old 판매관리 : 대메뉴에서 각 상품 판매상태 수정할 수 있도록 수정됨
+            /*FoodAdmin foodadmin = new FoodAdmin();
+            foodadminflag = true;
+            System.out.println("\n\t[ 판매관리 ]===============");
+            System.out.printf("\t1. 판매정보 출력\n\t2. 판매항목 세팅\n\t3. 판매항목 제거\n");
+            System.out.println("\t=========================");
+            while(foodadminflag) {
+                try {
+                    System.out.print("\t▶ 메뉴선택(1~3) : ");
+                    check = Integer.parseInt(br.readLine());
+                }
+                catch (NumberFormatException e){
+                }
+                switch (check){
+                    case 1:
+                        foodadmin.setting_print();
+                        return;
+                    case 2:
+                        foodadmin.product_setting();
+                        return;
+                    case 3:
+                        foodadmin.soldout_management();
+                        return;
+                    default:
+                        System.out.println("\t[!] 입력된 숫자가 옳지 않습니다.");
+                        break;
+                }
+            }*/
             stockflag = true;
             while(stockflag)
             {
@@ -187,6 +182,7 @@ public class KioskMg
 //                System.out.println("printStackTrace................");
 //                e.printStackTrace();
 //            }
+            System.out.println("\n\n\t====[[[[[ 사용자 화면 ]]]]]====");
             ProductService productService = new ProductService(); // ProductService 객체 생성
             Kiosk ks = new Kiosk(productService);
             ks.kioskStart();
