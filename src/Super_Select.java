@@ -109,7 +109,7 @@ class SelectContinue extends Super_Select {
 
         br = new BufferedReader(new InputStreamReader(System.in));
         InsertSelectValue insertSelectValue = new InsertSelectValue();
-        List<OrderValues> orderInnerValues = CacheData.orderInnerValues;
+        List<OrderValues> OrderValuesList = CacheData.selectValueCart;
         OrderValues orderValues = null;
         char answer;
 
@@ -120,7 +120,7 @@ class SelectContinue extends Super_Select {
                     // 장바구니 OuterList에 있는 이름과 같은 갯수를 빼서 limit에 담아두고, limit을 select에 넘겨주기
                     for (Product product: productList){
                         product.setP_limitCount(product.getP_count()-product.getP_stock());
-                        for (OrderValues orderValues2: orderInnerValues){
+                        for (OrderValues orderValues2: OrderValuesList){
                             if(orderValues2.getName().equals(product.getP_name())){
                                 product.setP_limitCount(product.getP_limitCount() - orderValues2.getCount());
                             }
@@ -134,9 +134,9 @@ class SelectContinue extends Super_Select {
                     break;
 
                 orderValues = insertSelectValue.insertSelectValueProduct(productList);
-                orderInnerValues.add(orderValues);
+                OrderValuesList.add(orderValues);
 
-                System.out.println(orderInnerValues);            // test 선택된 메뉴 출력
+                System.out.println(OrderValuesList);            // test 선택된 메뉴 출력
 
             }
         } catch (IOException e) {
@@ -153,7 +153,7 @@ class SelectContinue extends Super_Select {
 
         br = new BufferedReader(new InputStreamReader(System.in));
         InsertSelectValue insertSelectValue = new InsertSelectValue();
-        List<OrderValues> orderInnerValues = CacheData.orderInnerValues;
+        List<OrderValues> OrderValuesList = CacheData.selectValueCart;
         OrderValues orderValues = null;
         char answer;
 
@@ -164,7 +164,7 @@ class SelectContinue extends Super_Select {
                     // 장바구니 OuterList에 있는 이름과 같은 갯수를 빼서 limit에 담아두고, limit을 select에 넘겨주기
                     for (MasterRc masterRc: productList){
                         masterRc.setR_limitCount(masterRc.getR_count());
-                        for (OrderValues orderValues2: orderInnerValues){
+                        for (OrderValues orderValues2: OrderValuesList){
                             if(orderValues2.getName().equals(masterRc.getR_name())){
                                 masterRc.setR_limitCount(masterRc.getR_limitCount() - orderValues2.getCount());
                             }
@@ -178,9 +178,9 @@ class SelectContinue extends Super_Select {
                     break;
 
                 orderValues = insertSelectValue.insertSelectValueMaster(productList);
-                orderInnerValues.add(orderValues);
+                OrderValuesList.add(orderValues);
 
-                System.out.println(orderInnerValues);            // test 선택된 메뉴 출력
+                System.out.println(OrderValuesList);            // test 선택된 메뉴 출력
 
             }
         } catch (IOException e) {
@@ -222,8 +222,8 @@ class InsertSelectValue{
         int totalPdCount = productList.get(userSelect - 1).getR_count(); // 선택한 재고 개수
         int pdCount = totalPdCount;
 
-        List<OrderValues> orderInnerValues = CacheData.orderInnerValues;
-        for (OrderValues orderValues: orderInnerValues){
+        List<OrderValues> OrderValuesList = CacheData.selectValueCart;
+        for (OrderValues orderValues: OrderValuesList){
             if(orderValues.getName().equals(productList.get(userSelect - 1).getR_name())){
                 pdCount -= orderValues.getCount();
             }

@@ -1,7 +1,5 @@
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.ArrayList;
 
 /*
  키오스크 ----------------------------------------------------------------
@@ -41,7 +39,7 @@ class Kiosk {
     }
 
     public void storePack() {
-        List<Order> OrderList = CacheData.orderOuterList;
+        List<Order> OrderList = CacheData.userSelectOrderList;
         String payMe = null;
         System.out.println("\n\t[ 포장/매장 선택 ]=============");
         System.out.println("\t1. 포장");
@@ -81,15 +79,13 @@ class Kiosk {
         }
 
         // 선택값 배열-유저 임시 이름 넣기
-        List<Order> outerList = CacheData.orderOuterList;           //-- 사용자 선택 바깥(틀) 생성
-        List<Order> orderOuterList = CacheData.orderOuterList;      //-- 사용자 선택 안쪽(값) 생성
 
-        if (orderOuterList.isEmpty()) {
-            orderOuterList.add(new Order(USER_NAME + 1, "20231012100200", 0, 0));
+        if (OrderList.isEmpty()) {
+            OrderList.add(new Order(USER_NAME + 1, "20231012100200", 0, 0));
         }
         else {
-            int outerListSize = outerList.size();
-            outerList.set(outerList.size()-1,new Order(USER_NAME + outerListSize, "20231012100200", 0, 0));
+            int outerListSize = OrderList.size();
+            OrderList.set(OrderList.size()-1,new Order(USER_NAME + outerListSize, "20231012100200", 0, 0));
         }
     }
 
@@ -113,7 +109,6 @@ class Kiosk {
             case MY_SALAD   : menuMySalad(); break;
             case DRINK      : menuDrink();   break;
             case SIDE       : menuSide();    break;
-            case CANCEL     : menuCancel();  break;
         }
     }
 
@@ -146,9 +141,5 @@ class Kiosk {
     public void menuSide() {
         System.out.println("\n\t[ 4. 사이드 ]");
         info.printInfo(ProductType.SIDE);
-    }
-
-    public void menuCancel() {
-
     }
 }

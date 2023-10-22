@@ -2,13 +2,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.BufferedReader;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import java.util.HashMap;
-
-import java.util.Date;
-import java.text.SimpleDateFormat;
 
 // 장바구니 클래스
 class cart
@@ -55,7 +49,7 @@ class cart
     //장바구니 출력 메소드
     public static void menuDis()
     {
-        List<Order> OrderList = CacheData.orderOuterList;
+        List<Order> OrderList = CacheData.userSelectOrderList;
 
         if(OrderList.get(OrderList.size()-1).getO_totPrice() == 0){
             try {
@@ -87,7 +81,7 @@ class cart
     //메뉴 선택 메소드
     public static void menuSel(int userSelect) throws IOException
     {
-        List<Order> OrderList = CacheData.orderOuterList;
+        List<Order> OrderList = CacheData.userSelectOrderList;
         try
         {
             sel = Integer.parseInt(br.readLine());
@@ -104,7 +98,7 @@ class cart
     //선택된 메뉴 실행에 따른 기능 호출 메소드
     public static void menuR(int userSelect) throws IOException
     {
-        List<Order> OrderList = CacheData.orderOuterList;
+        List<Order> OrderList = CacheData.userSelectOrderList;
         //cartMe() 메소드 활용하여 처리
         switch (sel)
         {
@@ -118,8 +112,8 @@ class cart
     //자료구조에 장바구니 비우기 메소드
     public static void cartdel() throws IOException
     {
-        List<OrderValues> orderInnerValues = CacheData.orderInnerValues;
-        List<Order> OrderList = CacheData.orderOuterList;
+        List<Order> OrderList = CacheData.userSelectOrderList;
+        List<OrderValues> OrderValuesList = CacheData.selectValueCart;
 
         System.out.print("\n\t▶ 장바구니를 비우시겠습니까(Y/N)? : ");
         con = br.readLine().toUpperCase();
@@ -127,7 +121,7 @@ class cart
         if (con.equals("Y"))                                        //장바구니를 비우기로 했으면 자료구조 비우기
         {
             OrderList.clear();  // 장바구니를 비우기 (모든 주문 정보 제거)
-            orderInnerValues.clear();
+            OrderValuesList.clear();
 //            OrderList.get(OrderList.size()-1).innerList.clear();  //TODO 왜 지워지지 않는지 조사
 
 
@@ -159,7 +153,7 @@ class cart
     //결제 메소드
     public static void cartpay() throws IOException
     {
-        List<Order> OrderList = CacheData.orderOuterList;
+        List<Order> OrderList = CacheData.userSelectOrderList;
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         py=0;
 
@@ -314,7 +308,7 @@ class cart
     //추가 주문 메소드(수정 필요)
     public static void cartadd(int userSelect) throws IOException
     {
-        List<Order> OrderList = CacheData.orderOuterList;
+        List<Order> OrderList = CacheData.userSelectOrderList;
         ProductService productService = new ProductService(); // ProductService 객체 생성
 
         Kiosk ks = new Kiosk(productService);                   //장바구니 비운 후 다시 메뉴 선택창으로 가기
@@ -344,7 +338,7 @@ class cart
     //포인트 사용 메소드
     public static void pointuse(int memberTotal) throws IOException
     {
-        List<Order> OrderList = CacheData.orderOuterList;
+        List<Order> OrderList = CacheData.userSelectOrderList;
         py=0;
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -416,8 +410,8 @@ class cart
     //결제수단 선택하는 메소드
     public static void paysel(int py,int memberTotal) throws IOException
     {
-        List<Order> OrderList = CacheData.orderOuterList;
-        List<OrderValues> orderInnerValues = CacheData.orderInnerValues;
+        List<Order> OrderList = CacheData.userSelectOrderList;
+        List<OrderValues> OrderValuesList = CacheData.selectValueCart;
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
         int payus=0;
@@ -484,7 +478,7 @@ class cart
             case 4:
 
                 OrderList.clear();
-                orderInnerValues.clear();
+                OrderValuesList.clear();
                 payPoint=0;
                 System.out.print("\t「 결제취소합니다. 」");
                 ProductService productService = new ProductService(); // ProductService 객체 생성
@@ -550,8 +544,8 @@ class cart
 
     public static void receipt(int memberTotal) throws IOException
     {
-        List<Order> OrderList = CacheData.orderOuterList;
-        List<OrderValues> orderInnerValues = CacheData.orderInnerValues;
+        List<Order> OrderList = CacheData.userSelectOrderList;
+        List<OrderValues> OrderValuesList = CacheData.selectValueCart;
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
@@ -579,7 +573,7 @@ class cart
                 System.out.println("│ ------------------------------------------------------------  │");
 
                 System.out.printf("│ %-4s) %-4s \t%-4s \t%-8s \t%-8s      │\n", "NO", "제품", "구매수량", "칼로리", "금액");
-                for (OrderValues orderValues: orderInnerValues) {
+                for (OrderValues orderValues: OrderValuesList) {
                     System.out.printf("│ %d-%d) %-8s \t%-8s \t%-8d \t%-8d│\n", i-1 , j++, orderValues.getName(), orderValues.getCount(), orderValues.getCalorie() * orderValues.getCount(), orderValues.getPrice() * orderValues.getCount());
                 }
             }
@@ -629,7 +623,7 @@ class cart
         salesMg.receiptSave();
         payPoint=0;
         OrderList.clear();
-        orderInnerValues.clear();
+        OrderValuesList.clear();
 
 
         ProductService productService = new ProductService(); // ProductService 객체 생성

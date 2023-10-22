@@ -84,7 +84,7 @@ public class InfoService implements Imp_info {
             int index=1;
 
             for(Product product : productInfo){
-                if(CacheData.orderInnerValues.isEmpty()){  // 초기값 셋팅
+                if(CacheData.selectValueCart.isEmpty()){  // 초기값 셋팅
                     product.setP_limitCount(product.getP_count() - product.getP_stock());
                 }
 
