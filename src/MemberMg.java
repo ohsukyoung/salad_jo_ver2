@@ -201,7 +201,6 @@ public class MemberMg implements Impl_admin
         }
     }
 
-    // 종료가 아니라 다시 관리자 메뉴로 돌아가게 수정해야함
     public void exit()
     {
         System.out.println("\n\t「 관리자 메뉴로 돌아갑니다. 」");

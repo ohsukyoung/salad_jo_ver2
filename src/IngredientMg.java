@@ -8,7 +8,7 @@ import java.util.StringTokenizer;
 
 public class IngredientMg implements Impl_admin{
 
-    public final int E_PRINT = 1;                    //-- 요소(회원) 추가
+    public final int E_PRINT = 1;
     public final int E_ADD = 2;
     public final int E_MOD = 3;
     public final int E_DEL = 4;
@@ -58,6 +58,8 @@ public class IngredientMg implements Impl_admin{
             default : System.out.print("\t[!] 메뉴 선택 오류");
         }
     }
+
+
     @Override
     public void ad_print() throws IOException, ClassNotFoundException {
 

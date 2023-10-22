@@ -89,11 +89,11 @@ public class KioskMg
         SalesMg sm = new SalesMg();
         IngredientMg im = new IngredientMg();
         StockMg stm = new StockMg();
+        MasterRc masterRc = new MasterRc();
 
 
         // 클래스를 활용하여 처리
         if (sel==E_STOCKMG){        // 1. 재고 관리
-            // 1. 판매 관리
 //            FoodAdmin foodadmin = new FoodAdmin();
 //            foodadminflag = true;
 //            System.out.println("\n\t[ 판매관리 ]===============");
@@ -124,7 +124,6 @@ public class KioskMg
 ////            AdminMenu adminmenu = new AdminMenu();
 ////            adminmenu.printproduct();
 //            }
-            StockMg stockMg = new StockMg();
             stockflag = true;
             while(stockflag)
             {
@@ -147,40 +146,15 @@ public class KioskMg
 
         }
         else if (sel==E_RECMG){     // 3. 사장추천 관리
-            MasterRc masterRc = new MasterRc();
             masterrcflag = true;
-            System.out.println("\n\t[사장추천 관리]==============");
-            System.out.printf("\t1.추천조합 출력\n\t2.추천조합 등록\n\t3.추천조합 정보 변경\n\t4.추천조합 정보 삭제\n");
-            System.out.println("\t=========================");
-            try {
-                System.out.print("\t▶ 메뉴선택(1~4) : ");
-                check = Integer.parseInt(br.readLine());
-            }
-            catch (NumberFormatException e){
+            while(masterrcflag)
+            {
+                masterRc.menuDisp();
+                masterRc.menuSelect();
+                masterRc.menuRun();
             }
 
-            while(masterrcflag) {
 
-                switch (check)
-                {
-                    case 1 :
-                        masterRc.ad_print();
-                        return;
-                    case 2 :
-                        masterRc.ad_add();
-                        return;
-                    case 3 :
-                        masterRc.ad_modify();
-                        return;
-                    case 4 :
-                        masterRc.ad_delete();
-                        return;
-                    default :
-                        System.out.println("\t[!] 입력된 숫자가 옳지 않습니다.");
-                        break;
-                }
-
-            }
         }
         else if (sel==E_SALESMG){   // 4. 매출 관리
             salesflag = true;
@@ -218,7 +192,7 @@ public class KioskMg
             ks.kioskStart();
 //            ad_login.kioskFlag = false;
         }
-        else if (sel == E_END)      //프로그램 종료
+        else if (sel == E_END)      // 7. 프로그램 종료
         {
             exitCart();
         }

@@ -1,7 +1,4 @@
-import java.util.Iterator;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.StringTokenizer;
+import java.util.*;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.IOException;
@@ -108,6 +105,55 @@ class MasterRc implements Serializable ,Impl_admin
     }
 
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public final int E_PRINT = 1;
+    public final int E_ADD = 2;
+    public final int E_MOD = 3;
+    public final int E_DEL = 4;
+    public final int E_EXIT = 5;
+
+
+    private static Integer sel;				         //-- 선택 값
+
+
+    static
+    {
+        // 사용자 입력값 초기화
+        sel = 1;
+    }
+
+    public void menuDisp()
+    {
+        System.out.println("\n\t[ 사장추천 관리 메뉴 선택 ]===========");
+        System.out.println("\t1. 추천조합 출력");
+        System.out.println("\t2. 추천조합 등록");
+        System.out.println("\t3. 추천조합 정보 변경");
+        System.out.println("\t4. 추천조합 정보 삭제");
+        System.out.println("\t5. 관리자 메뉴 화면으로 이동");
+        System.out.println("\t=================================");
+        System.out.print("\t▶ 메뉴 선택(1~5) : ");
+    }
+
+    public void menuSelect() throws IOException, NumberFormatException
+    {
+        sel = Integer.parseInt(br.readLine());
+    }
+
+    // 메뉴 실행에 따른 기능 호출 메소드
+    public void menuRun() throws IOException, ClassNotFoundException
+    {
+        switch (sel)
+        {
+            case E_PRINT : ad_print(); break;
+            case E_ADD : ad_add(); break;
+            case E_MOD : ad_modify(); break;
+            case E_DEL : ad_delete(); break;
+            case E_EXIT : exit(); break;
+            default : System.out.print("\t[!] 메뉴 선택 오류");
+        }
+    }
+
     @Override
     public void ad_print()
     {
@@ -126,7 +172,7 @@ class MasterRc implements Serializable ,Impl_admin
                 System.out.printf("\t|| %5d || %8s || %5d || %5d || %5d ",
                         masterRc.getR_checkNumber(), masterRc.getR_name(), masterRc.getR_totalcalorie()
                             , masterRc.getR_price(), masterRc.getR_count(), masterRc);
-                
+
                 // 상세재료 출력
                 String materialDetail="";
                 for (int i = 0; i<masterRc.getR_products().size(); i++)
@@ -148,7 +194,6 @@ class MasterRc implements Serializable ,Impl_admin
         }
         System.out.println("\t=============================================================================================================");
 
-        KioskMg.masterrcflag = false;
 
     }
 
@@ -251,7 +296,6 @@ class MasterRc implements Serializable ,Impl_admin
             System.out.println("\t[!] 잘못된 입력입니다. 다시 입력하세요.");
         }
 
-        KioskMg.masterrcflag = false;
     }
 
 
@@ -344,7 +388,6 @@ class MasterRc implements Serializable ,Impl_admin
         } catch (NumberFormatException e) {
             System.out.println("\t[!] 잘못된 입력입니다. 다시 입력하세요.");
         }
-        KioskMg.masterrcflag = false;
     }
 
 
@@ -417,8 +460,11 @@ class MasterRc implements Serializable ,Impl_admin
         } catch (NumberFormatException e) {
             System.out.println("\t[!] 잘못된 입력입니다. 다시 입력하세요.");
         }
-
-        KioskMg.masterrcflag = false;
     }
 
+    public void exit()
+    {
+        System.out.println("\n\t「 관리자 메뉴로 돌아갑니다. 」");
+        KioskMg.masterrcflag = false;
+    }
 }
