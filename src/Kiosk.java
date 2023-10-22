@@ -46,6 +46,7 @@ class Kiosk {
         System.out.println("\n\t[ 포장/매장 선택 ]=============");
         System.out.println("\t1. 포장");
         System.out.println("\t2. 매장");
+        System.out.println("\t(-1) 관리자 모드");
         System.out.println("\t==============================");
         SelectMenu selectMenu = new SelectMenu();
         int listSize = 2;

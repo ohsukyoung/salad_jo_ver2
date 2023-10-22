@@ -64,7 +64,8 @@ public class KioskMg
     public static void adMenuDisp()
     {
         System.out.println("\n\t[ 키오스크 관리 메뉴 선택 ]=============");
-        System.out.println("\t1. 판매 관리");
+//        System.out.println("\t1. 판매 관리");
+        System.out.println("\t1. 재고 관리");
         System.out.println("\t2. 재료 관리");
         System.out.println("\t3. 사장추천 관리");
         System.out.println("\t4. 매출 관리");
@@ -90,35 +91,60 @@ public class KioskMg
         // 클래스를 활용하여 처리
         if (sel==E_STOCKMG){
             // 1. 판매 관리
-            FoodAdmin foodadmin = new FoodAdmin();
+//            FoodAdmin foodadmin = new FoodAdmin();
+//            foodadminflag = true;
+//            System.out.println("\n\t[ 판매관리 ]===============");
+//            System.out.printf("\t1. 판매정보 출력\n\t2. 판매항목 세팅\n\t3. 판매항목 제거\n");
+//            System.out.println("\t=========================");
+//            while(foodadminflag) {
+//                try {
+//                    System.out.print("\t▶ 메뉴선택(1~3) : ");
+//                    check = Integer.parseInt(br.readLine());
+//                }
+//                catch (NumberFormatException e){
+//                }
+//                switch (check){
+//                    case 1:
+//                        foodadmin.setting_print();
+//                        return;
+//                    case 2:
+//                        foodadmin.product_setting();
+//                        return;
+//                    case 3:
+//                        foodadmin.soldout_management();
+//                        return;
+//                    default:
+//                        System.out.println("\t[!] 입력된 숫자가 옳지 않습니다.");
+//                        break;
+//                }
+//
+////            AdminMenu adminmenu = new AdminMenu();
+////            adminmenu.printproduct();
+//            }
+            FoodSetting foodSetting = new FoodSetting();
             foodadminflag = true;
-            System.out.println("\n\t[ 판매관리 ]===============");
-            System.out.printf("\t1. 판매정보 출력\n\t2. 판매항목 세팅\n\t3. 판매항목 제거\n");
+            System.out.println("\n\t[ 재고관리 ]===============");
+            System.out.printf("\t1. 재료셋팅\n\t2. 품절관리\n");
             System.out.println("\t=========================");
             while(foodadminflag) {
                 try {
-                    System.out.print("\t▶ 메뉴선택(1~3) : ");
+                    System.out.print("\t▶ 메뉴선택(1~2) : ");
                     check = Integer.parseInt(br.readLine());
                 }
                 catch (NumberFormatException e){
                 }
                 switch (check){
                     case 1:
-                        foodadmin.setting_print();
+                        foodSetting.product_setting();
                         return;
                     case 2:
-                        foodadmin.product_setting();
-                        return;
-                    case 3:
-                        foodadmin.soldout_management();
+                        foodSetting.soldout_management();
                         return;
                     default:
                         System.out.println("\t[!] 입력된 숫자가 옳지 않습니다.");
                         break;
                 }
 
-//            AdminMenu adminmenu = new AdminMenu();
-//            adminmenu.printproduct();
             }
         }
         else if (sel==E_INGMG){
