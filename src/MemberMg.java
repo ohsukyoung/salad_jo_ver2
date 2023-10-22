@@ -31,7 +31,7 @@ public class MemberMg implements Impl_admin
     }
 
     // 메뉴 출력 메소드
-    public void memMenuDisp()
+    public void menuDisp()
     {
         System.out.println("\n\t[ 회원관리 메뉴 선택 ]===========");
         System.out.println("\t1. 회원 목록 출력");
@@ -44,13 +44,13 @@ public class MemberMg implements Impl_admin
     }
 
     // 메뉴 선택 메소드
-    public void memMenuSelect() throws IOException, NumberFormatException
+    public void menuSelect() throws IOException, NumberFormatException
     {
         sel = Integer.parseInt(br.readLine());
     }
 
     // 메뉴 실행에 따른 기능 호출 메소드
-    public void memMenuRun() throws IOException
+    public void menuRun() throws IOException
     {
         switch (sel)
         {

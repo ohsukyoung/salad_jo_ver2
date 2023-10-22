@@ -4,7 +4,7 @@ import java.io.IOException;
 
 public class KioskMg
 {
-    public static final int E_STOCKMG =1; // 판매관리
+    public static final int E_STOCKMG = 1; // 재고 관리
     public static final int E_INGMG = 2; // 재료 관리
     public static final int E_RECMG = 3; // 사장추천 관리
     public static final int E_SALESMG = 4; // 매출 관리
@@ -47,7 +47,7 @@ public class KioskMg
     public static boolean memflag;
     public static boolean salesflag;
     public static boolean foodadminflag;
-    public static boolean productflag;
+    public static boolean ingredientflag;
     public static boolean masterrcflag;
     static
     {
@@ -87,6 +87,8 @@ public class KioskMg
 
         MemberMg mm = new MemberMg();
         SalesMg sm = new SalesMg();
+        IngredientMg im = new IngredientMg();
+
 
         // 클래스를 활용하여 처리
         if (sel==E_STOCKMG){
@@ -149,38 +151,15 @@ public class KioskMg
         }
         else if (sel==E_INGMG){
             // 2. 재료 관리
-            Product product = new Product();
-            productflag = true;
-            System.out.println("\n\t[ 재료관리 ]==============");
-            System.out.printf("\t1. 재료출력\n\t2. 신규재료 등록\n\t3. 재료정보 변경\n\t4. 재료정보 삭제\n");
-            System.out.println("\t=========================");
-            try {
-                System.out.print("\t▶ 메뉴선택(1~4) : ");
-                check = Integer.parseInt(br.readLine());
-            }
-            catch (NumberFormatException e){
+            ingredientflag = true;
+            while(ingredientflag)
+            {
+                im.menuDisp();
+                im.menuSelect();
+                im.menuRun();
             }
 
-            while(productflag) {
 
-                switch (check){
-                    case 1 :
-                        product.ad_print();
-                        return;
-                    case 2 :
-                        product.ad_add();
-                        return;
-                    case 3 :
-                        product.ad_modify();
-                        return;
-                    case 4 :
-                        product.ad_delete();
-                        return;
-                    default:
-                        System.out.println("\t[!] 입력된 숫자가 옳지 않습니다.");
-                        break;
-                }
-            }
         }
         else if (sel==E_RECMG){     // 3. 사장추천 관리
             MasterRc masterRc = new MasterRc();
@@ -231,9 +210,9 @@ public class KioskMg
             memflag = true;
             while(memflag)
             {
-                mm.memMenuDisp();
-                mm.memMenuSelect();
-                mm.memMenuRun();
+                mm.menuDisp();
+                mm.menuSelect();
+                mm.menuRun();
             }
         }
         else if (sel==E_KIOSKSTART) // 6. 판매시작(사용자 화면으로 이동)

@@ -3,7 +3,7 @@ import java.util.Iterator;
 import java.util.List;
 
 public class FoodSetting implements Serializable {
-
+// 재고관리 메뉴 클래스
     List<Product> allProductList = CacheData.allProductList;
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
