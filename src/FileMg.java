@@ -68,32 +68,32 @@ public class FileMg
         }
     }
 
-    public List<Product> list3FileIn() throws IOException, ClassNotFoundException{
-        List<Product> list3fileIn = new ArrayList<>();
-        try {
-            ObjectInputStream ois = new ObjectInputStream(new FileInputStream("data/list3.ser"));
-            list3fileIn = (List<Product>) ois.readObject();
-            ois.close();
-            return list3fileIn;
-        }catch (FileNotFoundException fnfe)
-        {
-            System.out.println("\tlist3.ser 파일을 찾을 수 없습니다.");
-            return list3fileIn;
-        }
-    }
-    public List<MasterRc> list4FileIn() throws IOException, ClassNotFoundException{
-        List<MasterRc> list4fileIn = new ArrayList<>();
-        try {
-            ObjectInputStream ois = new ObjectInputStream(new FileInputStream("data/list4.ser"));
-            list4fileIn = (List<MasterRc>) ois.readObject();
-            ois.close();
-            return list4fileIn;
-        }catch (FileNotFoundException fnfe)
-        {
-            System.out.println("\tlist4.ser 파일을 찾을 수 없습니다.");
-            return list4fileIn;
-        }
-    }
+//    public List<Product> list3FileIn() throws IOException, ClassNotFoundException{
+//        List<Product> list3fileIn = new ArrayList<>();
+//        try {
+//            ObjectInputStream ois = new ObjectInputStream(new FileInputStream("data/list3.ser"));
+//            list3fileIn = (List<Product>) ois.readObject();
+//            ois.close();
+//            return list3fileIn;
+//        }catch (FileNotFoundException fnfe)
+//        {
+//            System.out.println("\tlist3.ser 파일을 찾을 수 없습니다.");
+//            return list3fileIn;
+//        }
+//    }
+//    public List<MasterRc> list4FileIn() throws IOException, ClassNotFoundException{
+//        List<MasterRc> list4fileIn = new ArrayList<>();
+//        try {
+//            ObjectInputStream ois = new ObjectInputStream(new FileInputStream("data/list4.ser"));
+//            list4fileIn = (List<MasterRc>) ois.readObject();
+//            ois.close();
+//            return list4fileIn;
+//        }catch (FileNotFoundException fnfe)
+//        {
+//            System.out.println("\tlist4.ser 파일을 찾을 수 없습니다.");
+//            return list4fileIn;
+//        }
+//    }
 
 
     //-------------------------------------------------------------------------------------------------------------
@@ -161,7 +161,7 @@ public class FileMg
 
         File f0 = new File(appDir, "/data/list2.ser");
 
-        List<MasterRc> list2 = CacheData.masterProductList;
+        List<MasterRc> list2 = CacheData.masterRcList;
         ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(f0));
 
         // 생성된 스트림에 내보낼 객체를 기록
@@ -170,33 +170,33 @@ public class FileMg
         oos.close();
     }
 
-    public void list3FileOut() throws IOException, ClassNotFoundException{
-        String appDir = System.getProperty("user.dir");
-        //-- 시스템 속성으로부터 현재 사용자가 사용중인 디렉토리 정보 얻어오기
-
-        File f0 = new File(appDir, "/data/list3.ser");
-
-        List<Product> list3 = CacheData.list3;
-        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(f0));
-
-        // 생성된 스트림에 내보낼 객체를 기록
-        oos.writeObject(list3);
-
-        oos.close();
-    }
-    public void list4FileOut() throws IOException, ClassNotFoundException{
-        String appDir = System.getProperty("user.dir");
-        //-- 시스템 속성으로부터 현재 사용자가 사용중인 디렉토리 정보 얻어오기
-
-        File f0 = new File(appDir, "/data/list4.ser");
-
-        List<MasterRc> list4 = CacheData.list4;
-        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(f0));
-
-        // 생성된 스트림에 내보낼 객체를 기록
-        oos.writeObject(list4);
-
-        oos.close();
-    }
+//    public void list3FileOut() throws IOException, ClassNotFoundException{
+//        String appDir = System.getProperty("user.dir");
+//        //-- 시스템 속성으로부터 현재 사용자가 사용중인 디렉토리 정보 얻어오기
+//
+//        File f0 = new File(appDir, "/data/list3.ser");
+//
+//        List<Product> list3 = CacheData.list3;
+//        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(f0));
+//
+//        // 생성된 스트림에 내보낼 객체를 기록
+//        oos.writeObject(list3);
+//
+//        oos.close();
+//    }
+//    public void list4FileOut() throws IOException, ClassNotFoundException{
+//        String appDir = System.getProperty("user.dir");
+//        //-- 시스템 속성으로부터 현재 사용자가 사용중인 디렉토리 정보 얻어오기
+//
+//        File f0 = new File(appDir, "/data/list4.ser");
+//
+//        List<MasterRc> list4 = CacheData.list4;
+//        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(f0));
+//
+//        // 생성된 스트림에 내보낼 객체를 기록
+//        oos.writeObject(list4);
+//
+//        oos.close();
+//    }
 
 }

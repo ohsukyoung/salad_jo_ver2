@@ -18,6 +18,9 @@ public class IngredientMg implements Impl_admin{
     private static BufferedReader br;		         //-- 사용자가 입력시 활용
     private static Integer sel;				         //-- 선택 값
 
+    String SaleTrue = CacheData.SaleTrue;
+    String SaleFalse = CacheData.SaleFalse;
+
 
     Product product = new Product();
 
@@ -63,7 +66,7 @@ public class IngredientMg implements Impl_admin{
     @Override
     public void ad_print() throws IOException, ClassNotFoundException {
 
-        List<Product> product = CacheData.allProductList;
+        List<Product> allProductList = CacheData.allProductList;
 
         System.out.println("\n\t[ 1. 재료정보 출력 ]===============");
         System.out.println("\t1. 전체 재료정보 출력  \n\t2. 선택 재료정보 출력 ");
@@ -93,12 +96,15 @@ public class IngredientMg implements Impl_admin{
                     System.out.println("\t==========================================================================================================");
 
                     // Iterator 활용하여 출력
-                    Iterator<Product> itList = product.iterator();
+                    Iterator<Product> itList = allProductList.iterator();
                     while (itList.hasNext())
                     {
                         Product itS = itList.next();
+                        
+                        //판매정보출력
                         String saleText = "";
-                        saleText = itS.getSaleflag()? "판매 O": "판매 X";
+                        saleText = itS.getSaleflag()? SaleTrue : SaleFalse;
+                        
                         System.out.printf("\t|| %5s || %5s || %9s || %5s || %5s || %5s || %5s || %5s || %5s ||\n", itS.getP_checkNumber(),
                                 itS.getP_material(), itS.getP_name(), itS.getP_unit(), itS.getP_count(), itS.getP_calorie(),
                                 itS.getP_stock(), itS.getP_price(), saleText);
@@ -121,8 +127,8 @@ public class IngredientMg implements Impl_admin{
 
                             boolean found = false; // found 변수 초기화
 
-                            for (int i = 0; i < product.size(); i++) {
-                                if (materialNumber == product.get(i).getP_material()) {
+                            for (int i = 0; i < allProductList.size(); i++) {
+                                if (materialNumber == allProductList.get(i).getP_material()) {
                                     found = true;
                                     break; // 해당 분류번호를 찾았으므로 루프 종료
                                 }
@@ -144,14 +150,16 @@ public class IngredientMg implements Impl_admin{
 
 
                     // Iterator 활용하여 선택한 분류번호에 해당하는 재료정보 출력
-                    Iterator<Product> itList1 = product.iterator();
+                    Iterator<Product> itList1 = allProductList.iterator();
                     while (itList1.hasNext())
                     {
                         Product itS = itList1.next();
                         if (itS.getP_material() == materialNumber)
                         {
+                            // 판매정보 출력
                             String saleText = "";
-                            saleText = itS.getSaleflag()? "판매 O": "판매 X";
+                            saleText = itS.getSaleflag()? SaleTrue : SaleFalse;
+                            
                             System.out.printf("\t|| %5s || %5s || %9s || %5s || %5s || %5s || %5s || %5s || %5s ||\n", itS.getP_checkNumber(),
                                     itS.getP_material(), itS.getP_name(), itS.getP_unit(), itS.getP_count(), itS.getP_calorie(),
                                     itS.getP_stock(), itS.getP_price(), saleText);
@@ -176,7 +184,7 @@ public class IngredientMg implements Impl_admin{
     public void ad_add() throws IOException,ClassNotFoundException {
 
         //자료구조 생성
-        List<Product> list1 = CacheData.allProductList;
+        List<Product> allProductList = CacheData.allProductList;
 
         boolean shouldExit = false;
         System.out.println("\n\t[ 2. 신규재료 등록 ]");
@@ -216,9 +224,6 @@ public class IngredientMg implements Impl_admin{
             boolean p_saleflag = false;
             p_saleflag = p_saleflagInt == 1? true : false;
 
-            List<Product> allProductList;
-            allProductList = CacheData.allProductList;
-
             boolean m = false;
             for (int i = 0; i < allProductList.size(); i++){
                 if (p_checkNumber == allProductList.get(i).getP_checkNumber() && allProductList.get(i).getSaleflag()){
@@ -235,7 +240,7 @@ public class IngredientMg implements Impl_admin{
                 char x = br.readLine().charAt(0);
                 if (x == 'Y' || x == 'y') {
                     Product product = new Product(p_checkNumber, productType, p_material, p_name, p_unit, p_count, p_calorie, p_stock, p_price, p_saleflag);
-                    list1.add(product);
+                    allProductList.add(product);
                     // 직렬화 주석 231018
 //                    FileMg f = new FileMg();
 //                    f.list1FileOut();
@@ -278,9 +283,11 @@ public class IngredientMg implements Impl_admin{
             if (pointNumber == allProductList.get(i).getP_checkNumber()) {
                 found = true;
                 Product itS = allProductList.get(i);
-
+                
+                // 판매정보 출력
                 String saleText = "";
-                saleText = itS.getSaleflag()? "판매 O": "판매 X";
+                saleText = itS.getSaleflag()? SaleTrue : SaleFalse;
+
                 System.out.println("\t==========================================================================================================");
                 System.out.printf("\t|| %5s || %5s || %9s || %5s || %5s || %5s || %5s || %5s || %5s ||\n",
                         "구분번호", "분류번호", "이름", "단위", "개수", "칼로리", "적정재고", "금액", "판매여부");
@@ -425,8 +432,8 @@ public class IngredientMg implements Impl_admin{
 
     @Override
     public void ad_delete() throws IOException, ClassNotFoundException {
-        List<Product> product = CacheData.allProductList;
-        List<Product> list3 = CacheData.list3;
+        List<Product> allProductList = CacheData.allProductList;
+//        List<Product> list3 = CacheData.list3;
 
         System.out.println("\n\t[ 4. 재료정보 삭제 ]");
         System.out.print("\t▶ 작업할 대상의 구분번호 입력 (뒤로가기:0) : ");
@@ -448,15 +455,15 @@ public class IngredientMg implements Impl_admin{
 
         int deleteIndex = -1; // 삭제할 아이템의 인덱스 초기화
 
-        for (int i = 0; i < product.size(); i++) {
-            if (pointNumber == product.get(i).getP_checkNumber()) {
+        for (int i = 0; i < allProductList.size(); i++) {
+            if (pointNumber == allProductList.get(i).getP_checkNumber()) {
                 found = true;
                 Iterator<Product> itList;
-                itList = product.iterator();
-                Product itS = product.get(i);
+                itList = allProductList.iterator();
+                Product itS = allProductList.get(i);
 
                 String saleText = "";
-                saleText = itS.getSaleflag()? "판매 O": "판매 X";
+                saleText = itS.getSaleflag()? SaleTrue : SaleFalse;
                 System.out.println("\t==========================================================================================================");
                 System.out.printf("\t|| %5s || %5s || %9s || %5s || %5s || %5s || %5s || %5s || %5s ||\n",
                         "구분번호", "분류번호", "이름", "단위", "개수", "칼로리", "적정재고", "금액", "판매여부");
@@ -472,13 +479,15 @@ public class IngredientMg implements Impl_admin{
                 char x = br.readLine().charAt(0);
 
                 if (x == 'Y' || x == 'y') {
-                    deleteIndex = i; // 삭제 대상 제품의 인덱스 설정
-                    for (Iterator<Product> iterator = list3.iterator(); iterator.hasNext(); ) {
-                        Product p = iterator.next();
-                        if (p.getP_checkNumber() == pointNumber) {
-                            iterator.remove(); // list3에서 안전하게 제거
-                        }
-                    }
+                    deleteIndex = i-1; // 삭제 대상 제품의 인덱스 설정
+                    allProductList.remove(deleteIndex);
+//                    for (Iterator<Product> iterator = list3.iterator(); iterator.hasNext(); ) {
+//                        Product p = iterator.next();
+//                        if (p.getP_checkNumber() == pointNumber) {
+//                            iterator.remove(); // list3에서 안전하게 제거
+//                        }
+//                    }
+                    System.out.println("\t「 삭제되었습니다. 」");
                     break;
                 } else if (x == 'N' || x == 'n') {
                     return; // 'N'을 입력하면 메소드를 빠져나옵니다.
@@ -495,15 +504,15 @@ public class IngredientMg implements Impl_admin{
         }
 
         // 삭제 대상 재료가 설정된 경우에만 삭제 수행
-        if (deleteIndex != -1) {
-            product.remove(deleteIndex);
-
-            // 직렬화 주석 231018
-//            FileMg f = new FileMg();
-//            f.list1FileOut();
-//            f.list3FileOut();
-            System.out.println("\t「 삭제되었습니다. 」");
-        }
+//        if (deleteIndex != -1) {
+//            product.remove(deleteIndex);
+//
+//            // 직렬화 주석 231018
+////            FileMg f = new FileMg();
+////            f.list1FileOut();
+////            f.list3FileOut();
+//            System.out.println("\t「 삭제되었습니다. 」");
+//        }
 
     }
     public void exit()

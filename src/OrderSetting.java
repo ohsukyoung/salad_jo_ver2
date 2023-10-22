@@ -31,21 +31,21 @@ public class OrderSetting {
 
     void calculateOrderDiscount() {            // 선택 값에 따라 재고에서 선택값 빼주기
 //        list1
-        List<Product> List1 = CacheData.allProductList;  //재료 리스트
+        List<Product> allProductList = CacheData.allProductList;  //재료 리스트
         List<Order> OrderList = CacheData.orderOuterList;  //장바구니 리스트
         List<OrderValues> orderValueList = CacheData.orderInnerValues; //선택 리스트
         int productIdx = 0;
         for (Order order: OrderList){
             for (OrderValues orderValues: orderValueList){
-                for(Product list1 : List1){
+                for(Product list1 : allProductList){
                     if(list1.getP_name().equals(orderValues.getName())){
-                        productIdx = List1.indexOf(list1);
+                        productIdx = allProductList.indexOf(list1);
                         break;
                     }
                 }
-                int productCount = List1.get(productIdx).getP_count();
+                int productCount = allProductList.get(productIdx).getP_count();
                 int productDiscount = orderValues.getCount();
-                List1.get(productIdx).setP_count(productCount - productDiscount);
+                allProductList.get(productIdx).setP_count(productCount - productDiscount);
            }
         }
         // list3

@@ -27,7 +27,8 @@ public class InfoService implements Imp_info {
             selectContinue.menuSelectProduct(productList);
         }else {
             // 리스트 출력
-            List<MasterRc> masterList = CacheData.masterProductList;
+//            List<MasterRc> masterList = CacheData.masterProductList;
+            List<MasterRc> masterList = pdInterface.getListMasterRc(productType);
             printInfoHeader(productType);
             printInfoBodyMaster(productType, masterList);
 
@@ -53,11 +54,26 @@ public class InfoService implements Imp_info {
         for(MasterRc masterRc : productInfo){
             System.out.printf("\t%-4d   %-8s \t%-8d \t%-8d \t%-8d", index++, masterRc.getR_name(), masterRc.getR_totalcalorie(), masterRc.getR_price(), masterRc.getR_count());
             System.out.printf("\t");
-            for (Product product : masterRc.getR_products())
-            {
-                System.out.print(" " + product.getP_name());
+            // 상세재료 출력
+            String materialDetail = "";
+            for (int i = 0; i < masterRc.getR_details().length; i++) {
+                for (Product p1 : CacheData.allProductList) {
+                    if (masterRc.getR_details()[i] == p1.getP_checkNumber()){
+                        if (i != 0){
+                            materialDetail += ", ";
+                        }
+                        String materialItem = p1.getP_name();
+                        materialDetail += materialItem;
+                    }
+                }
             }
-            System.out.println();
+            System.out.printf("\t %-12s\n", materialDetail);
+
+//            for (Product product : masterRc.getR_products())
+//            {
+//                System.out.print(" " + product.getP_name());
+//            }
+//            System.out.println();
         }
         System.out.println("\t---------------------------------------------------------------------------------------------------------------------");
     }
