@@ -52,7 +52,7 @@ public class SalesMg
 
     public static void receiptSave(){
 
-        for (Order orders: CacheData.orderOuterList){
+        for (Order orders: CacheData.userSelectOrderList){
             String nowTime = orders.getO_nowTime();
             int year = Integer.parseInt(nowTime.substring(0,4));
             int month = Integer.parseInt(nowTime.substring(4,6));
