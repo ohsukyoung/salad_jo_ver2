@@ -25,9 +25,5 @@ public class Main {
 //        // 객체 파일 내보내기
 //        f.memberFileOut();
 //        f.receiptFileOut();
-
-//        // 환영인사 //TODO 꾸밀때 넣기
-//        Emp emp = new Emp(":)");
-//        emp.empWelcome();
     }
 }

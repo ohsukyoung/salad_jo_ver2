@@ -123,8 +123,9 @@ class cart
             OrderList.clear();  // 장바구니를 비우기 (모든 주문 정보 제거)
             OrderValuesList.clear();
 //            OrderList.get(OrderList.size()-1).innerList.clear();  //TODO 왜 지워지지 않는지 조사
-
-
+            for(Product product : CacheData.allProductList) {       // 사용자 남은수량 셋팅
+                product.setP_limitFlag(false);
+            }
 
             System.out.println();
             System.out.println("\t「 장바구니를 비웠습니다. 」");
@@ -479,6 +480,9 @@ class cart
 
                 OrderList.clear();
                 OrderValuesList.clear();
+                for(Product product : CacheData.allProductList) {       // 사용자 남은수량 셋팅
+                    product.setP_limitFlag(false);
+                }
                 payPoint=0;
                 System.out.print("\t「 결제취소합니다. 」");
                 ProductService productService = new ProductService(); // ProductService 객체 생성
@@ -618,7 +622,9 @@ class cart
         payPoint=0;
         OrderList.clear();
         OrderValuesList.clear();
-
+        for(Product product : CacheData.allProductList) {       // 사용자 남은수량 셋팅
+            product.setP_limitFlag(false);
+        }
 
         ProductService productService = new ProductService(); // ProductService 객체 생성
 

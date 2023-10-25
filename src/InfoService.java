@@ -77,8 +77,9 @@ public class InfoService implements Imp_info {
             int index=1;
 
             for(Product product : productInfo){
-                if(CacheData.selectValueCart.isEmpty()){  // 초기값 셋팅
+                if(!product.getP_limitFlag()){  // 초기값 셋팅
                     product.setP_limitCount(product.getP_count() - product.getP_stock());
+                    product.setP_limitFlag(true);
                 }
 
                 System.out.printf("\t%-4d   %-8s \t%-8s \t%-8s\t \t%-8d \t%-8d\n",
